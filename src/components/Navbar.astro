@@ -95,10 +95,12 @@ import Logo from './Logo.astro';
     left: 0;
     right: 0;
     z-index: 100;
-    /* Completamente transparente — no tapa el logo de la imagen */
+    /* 100% transparente sobre el Hero */
     background: transparent;
     transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
-    padding: 0.75rem 0;
+    /* safe-area-inset-top: respeta el notch en iPhones */
+    padding-top: calc(0.85rem + env(safe-area-inset-top, 0px));
+    padding-bottom: 0.85rem;
   }
 
   .navbar.scrolled {
@@ -106,12 +108,14 @@ import Logo from './Logo.astro';
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 20px rgba(51,33,28,0.08);
-    padding: 0.25rem 0;
+    padding-top: calc(0.35rem + env(safe-area-inset-top, 0px));
+    padding-bottom: 0.35rem;
   }
 
   .nav-inner {
     max-width: 1200px;
     margin: 0 auto;
+    /* Aumentamos el padding lateral en mobile para aire visual */
     padding: 0 1.5rem;
     display: flex;
     align-items: center;
