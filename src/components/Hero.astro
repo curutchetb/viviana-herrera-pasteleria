@@ -1,56 +1,45 @@
 ---
-// Hero.astro — v4 "Logo como elemento centrado"
+// Hero.astro v4 — Full-Bleed background-image (sin <img> tag)
 //
-// Diagnóstico: logo-bg.webp (512×276) es la imagen del círculo logo.
-// Con object-fit:cover en mobile portrait (393×852), la imagen escala
-// por el eje Y y el círculo queda MÁS ANCHO que el viewport → cortado.
+// CAMBIO CLAVE: usamos background-image CSS en lugar de <img>.
+// Esto garantiza que la imagen sea verdaderamente full-bleed sin
+// bordes, gaps ni comportamiento de elemento inline.
 //
-// Solución: la imagen NO es el fondo — es un elemento <img> posicionado
-// en el centro de la sección. El fondo real es el gradiente extendido
-// (colores extraídos de los bordes de la foto). Esto garantiza:
-//   ✓ El círculo siempre se ve completo
-//   ✓ Sin franjas negras
-//   ✓ Texto SEO arriba, botones abajo
-//   ✓ Responsive en cualquier viewport
+// Paleta extraída de logo-bg.webp:
+//   Alrededor del logo: #d0ab8e  (foto que rodea el círculo)
+//   Más claro x1.1:     #e4bc9c  (para zonas de luz)
+//   Esquinas TL:        #c4c499  TR: #dcd6c1  BL: #dfd9ca  BR: #a09995
+//   Interior logo:      ~#fdfbf7 (crema)
+//   Borde punteado:     #777478
 ---
 
 <section id="inicio" class="hero" aria-label="Viviana Herrera Pastelería">
 
-  <!-- Fondo decorativo: gradiente que imita la foto de tortas -->
-  <div class="hero-bg-deco" aria-hidden="true"></div>
+  <!-- Overlay semántico separado para control fino -->
+  <div class="hero-overlay" aria-hidden="true"></div>
 
-  <!-- El logo circular como elemento centrado, no como fondo -->
-  <img
-    src="/images/logo-bg.webp"
-    alt="Logo Viviana Herrera Pastelería"
-    class="hero-logo-img"
-    loading="eager"
-    fetchpriority="high"
-    width="512"
-    height="276"
-    aria-hidden="true"
-  />
-
-  <!-- Contenido semántico -->
+  <!-- CONTENIDO
+       Orden: [NAVBAR fijo] → padding-top → [TEXTOS SEO] → [spacer=logo] → [BOTONES]
+  -->
   <div class="hero-content">
 
-    <!-- Textos SEO — encima del logo -->
     <div class="hero-top reveal">
       <p class="hero-location">
-        <svg width="9" height="12" viewBox="0 0 10 13" fill="none" aria-hidden="true">
-          <path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 8 5 8s5-4.25 5-8c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor"/>
+        <svg width="9" height="12" viewBox="0 0 9 12" fill="none" aria-hidden="true">
+          <path d="M4.5 0C2.015 0 0 2.015 0 4.5 0 7.875 4.5 12 4.5 12S9 7.875 9 4.5C9 2.015 6.985 0 4.5 0zm0 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor"/>
         </svg>
         Salto, Buenos Aires
       </p>
       <h1 class="hero-tagline">
-        Tortas artesanales · Postres · Mesas dulces
+        <span class="hero-tagline-pill">
+          Tortas artesanales&thinsp;&middot;&thinsp;Postres&thinsp;&middot;&thinsp;Mesas&nbsp;dulces
+        </span>
       </h1>
     </div>
 
-    <!-- Espaciador adaptable: ocupa la zona visual del logo -->
-    <div class="hero-spacer" aria-hidden="true"></div>
+    <!-- Spacer: zona donde vive el logo de la imagen -->
+    <div class="hero-logo-spacer" aria-hidden="true"></div>
 
-    <!-- Botones — debajo del logo -->
     <div class="hero-bottom reveal reveal-delay-2">
       <div class="hero-actions">
         <a
@@ -58,6 +47,7 @@
           target="_blank"
           rel="noopener noreferrer"
           class="btn-primary"
+          aria-label="Hacer un pedido por WhatsApp"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -67,26 +57,28 @@
         <a href="#galeria" class="btn-secondary">Ver creaciones</a>
       </div>
 
-      <p class="scroll-hint" aria-hidden="true">
-        Deslizá para conocer más
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Deslizá para conocer más</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 5v14M5 12l7 7 7-7"/>
         </svg>
-      </p>
+      </div>
     </div>
 
   </div>
 </section>
 
 <style>
-  /* ══════════════════════════════════════════════════════════
-     HERO — v4 "Logo como elemento"
+  /* ═══════════════════════════════════════════════════════════
+     HERO v4 — Full-Bleed via background-image CSS
      
-     El fondo real es un gradiente de tortas (cálido/oscuro).
-     La imagen logo-bg.webp se trata como un <img> posicionado
-     en el centro de la sección, nunca como background-image.
-     Esto resuelve definitivamente el problema de recorte.
-  ══════════════════════════════════════════════════════════ */
+     Por qué background-image y no <img>:
+     Un <img> es un elemento de reemplazo — tiene dimensiones
+     intrínsecas, márgenes implícitos y comportamiento inline
+     que hace difícil lograr un fondo verdaderamente full-bleed
+     sin CSS adicional. Con background-image el navegador
+     gestiona el llenado de la caja directamente.
+  ═══════════════════════════════════════════════════════════ */
 
   .hero {
     position: relative;
@@ -97,164 +89,124 @@
     text-align: center;
     overflow: hidden;
 
-    /* Fondo: gradiente que evoca la foto de tortas y postres.
-       Coincide con los bordes reales de logo-bg.webp. */
-    background:
-      radial-gradient(
-        ellipse 160% 100% at 50% 0%,
-        #e8c99a 0%,
-        #c9a06e 20%,
-        #8a5c3e 50%,
-        #4a2e1c 80%,
-        #2c1a0e 100%
-      );
+    /* ── FONDO EXTENDIDO ─────────────────────────────────────
+       1. background-color: color exacto que rodea al logo en
+          la foto (#d0ab8e). Es el "relleno" cuando la imagen
+          no cubre todo el viewport. Sin franjas negras.
+       2. background-image: la foto, full-bleed.
+       3. background-size: cover — siempre llena, nunca deja gaps.
+       4. background-position: center 42% — el logo circular queda
+          levemente por encima del centro, nunca se corta por arriba.
+    ──────────────────────────────────────────────────────── */
+    background-color: #d0ab8e;
+    background-image: url('/images/logo-bg.webp');
+    background-size: cover;
+    background-position: center 42%;
+    background-repeat: no-repeat;
   }
 
-  /* ── FONDO DECORATIVO (capa de textura) ── */
-  .hero-bg-deco {
+  /* ── OVERLAY VERTICAL ─────────────────────────────────────
+     Oscurece arriba (textos SEO legibles) y abajo (botones),
+     zona central casi limpia (logo respira).
+  ──────────────────────────────────────────────────────── */
+  .hero-overlay {
     position: absolute;
     inset: 0;
     z-index: 0;
-    /* Viñeta que oscurece los bordes para profundidad */
-    background: radial-gradient(
-      ellipse 80% 70% at 50% 50%,
-      transparent 40%,
-      rgba(20, 10, 4, 0.45) 100%
+    background: linear-gradient(
+      180deg,
+      rgba(18, 9, 4, 0.65)  0%,
+      rgba(18, 9, 4, 0.22) 20%,
+      rgba(18, 9, 4, 0.02) 36%,
+      rgba(18, 9, 4, 0.02) 62%,
+      rgba(18, 9, 4, 0.26) 78%,
+      rgba(18, 9, 4, 0.70) 100%
     );
-    pointer-events: none;
   }
 
-  /* ── LOGO-IMG: el círculo como elemento posicionado ──────
-     
-     Lógica de posicionamiento:
-     - position: absolute, centrado horizontalmente
-     - top: 50% con transform para centrar verticalmente
-     - width: clamp() que en mobile no supera el viewport
-     - z-index: 1 (entre el fondo y el contenido)
-     
-     En cualquier viewport, el círculo siempre cabe entero.
+  /* ── CONTENIDO ────────────────────────────────────────────
+     flex column + space-between:
+       hero-top    → arriba (textos SEO)
+       hero-logo-spacer → flex:1 (zona del logo)
+       hero-bottom → abajo (botones)
   ──────────────────────────────────────────────────────── */
-  .hero-logo-img {
-    position: absolute;
-    /* Centro vertical: ajustado arriba del centro geométrico
-       para que los botones queden debajo con buen aire */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -52%);
-    z-index: 1;
-
-    /* Ancho máximo: 92% del viewport, nunca más de 560px.
-       En mobile 393px → imagen = 362px → cabe perfecta sin corte. */
-    width: clamp(280px, 92vw, 560px);
-    height: auto;
-
-    /* Sombra suave para separar del fondo */
-    filter:
-      drop-shadow(0 8px 40px rgba(0, 0, 0, 0.55))
-      drop-shadow(0 2px 12px rgba(0, 0, 0, 0.35));
-
-    /* Animación de entrada */
-    animation: logo-enter 1s ease forwards;
-    opacity: 0;
-  }
-
-  @keyframes logo-enter {
-    from { opacity: 0; transform: translate(-50%, -48%) scale(0.97); }
-    to   { opacity: 1; transform: translate(-50%, -52%) scale(1); }
-  }
-
-  /* ── OVERLAY sobre el logo para que el texto sea legible ── */
-  /* No necesitamos overlay global — el fondo oscuro ya ayuda.
-     Solo suavizamos arriba y abajo donde va el texto. */
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(20, 10, 4, 0.70) 0%,     /* zona navbar + textos SEO */
-        rgba(20, 10, 4, 0.15) 20%,
-        rgba(20, 10, 4, 0.00) 38%,    /* zona del logo — limpio */
-        rgba(20, 10, 4, 0.00) 60%,
-        rgba(20, 10, 4, 0.20) 76%,
-        rgba(20, 10, 4, 0.72) 100%    /* zona botones */
-      );
-    pointer-events: none;
-  }
-
-  /* ── CONTENIDO ─────────────────────────────────────────── */
   .hero-content {
     position: relative;
-    z-index: 3; /* encima del logo y del overlay */
+    z-index: 1;
     width: 100%;
-    max-width: 600px;
+    max-width: 640px;
     margin: 0 auto;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-
     display: flex;
     flex-direction: column;
     min-height: 100svh;
     justify-content: space-between;
-
-    /* padding-top: deja espacio claro bajo el navbar (≈75px) + aire (30px) */
-    padding-top: calc(105px + env(safe-area-inset-top, 0px));
-    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+    /* navbar (~75px) + aire visual (45px) + notch */
+    padding-top: calc(120px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(2.25rem + env(safe-area-inset-bottom, 0px));
   }
 
-  /* ── TEXTOS SEO ── */
+  /* ── TEXTOS SEO ───────────────────────────────────────── */
   .hero-top {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.6rem;
   }
 
   .hero-location {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.4rem;
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.78rem, 2.2vw, 0.9rem);
-    font-weight: 700;
-    letter-spacing: 0.28em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.26em;
     text-transform: uppercase;
-    color: #F0D99A;
-    text-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.95),
-      0 0  20px rgba(0, 0, 0, 0.7);
-    margin: 0;
+    color: #EAD9B5;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5);
   }
 
   .hero-tagline {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.78rem, 2.4vw, 1rem);
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(253, 251, 247, 0.97);
-    text-shadow:
-      0 2px 10px rgba(0, 0, 0, 0.98),
-      0 0  28px rgba(0, 0, 0, 0.8);
-    line-height: 1.65;
+    /* Reset h1 defaults */
     margin: 0;
     padding: 0;
+    font-size: 0; /* el texto vive en el span inner */
   }
 
-  /* ── ESPACIADOR ── */
-  .hero-spacer {
+  .hero-tagline-pill {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(0.64rem, 1.8vw, 0.80rem);
+    font-weight: 500;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: rgba(253,251,247,0.95);
+    /* Caja oscura translúcida con blur — siempre legible */
+    background: rgba(18, 9, 4, 0.52);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(253,251,247,0.15);
+    border-radius: 50px;
+    padding: 0.45rem 1.1rem;
+    /* Sin text-shadow: el fondo ya da el contraste necesario */
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* ── SPACER DEL LOGO ──────────────────────────────────── */
+  .hero-logo-spacer {
     flex: 1;
-    min-height: 24px;
+    min-height: 32px;
   }
 
-  /* ── BOTONES ── */
+  /* ── BOTONES ──────────────────────────────────────────── */
   .hero-bottom {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1.4rem;
   }
 
   .hero-actions {
@@ -271,35 +223,35 @@
     gap: 0.5rem;
     background: #25D366;
     color: #fff;
-    padding: 0.9rem 1.8rem;
+    padding: 0.85rem 1.8rem;
     border-radius: 50px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-decoration: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    box-shadow: 0 4px 22px rgba(37, 211, 102, 0.50);
+    box-shadow: 0 4px 22px rgba(37,211,102,0.50);
     white-space: nowrap;
   }
 
   .btn-primary:hover {
     background: #20b557;
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(37, 211, 102, 0.60);
+    box-shadow: 0 8px 32px rgba(37,211,102,0.60);
   }
 
   .btn-secondary {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(253, 251, 247, 0.12);
+    background: rgba(253,251,247,0.10);
     color: #FDFBF7;
-    padding: 0.9rem 1.8rem;
+    padding: 0.85rem 1.8rem;
     border-radius: 50px;
-    border: 1.5px solid rgba(253, 251, 247, 0.60);
+    border: 1.5px solid rgba(253,251,247,0.55);
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 400;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -310,49 +262,71 @@
   }
 
   .btn-secondary:hover {
-    background: rgba(253, 251, 247, 0.22);
-    border-color: rgba(253, 251, 247, 0.95);
+    background: rgba(253,251,247,0.20);
+    border-color: rgba(253,251,247,0.9);
     transform: translateY(-2px);
   }
 
-  /* ── SCROLL HINT ── */
+  /* ── SCROLL HINT ─────────────────────────────────────── */
   .scroll-hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: rgba(253, 251, 247, 0.50);
-    margin: 0;
-    animation: hint-bounce 2.4s ease-in-out infinite;
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(253,251,247,0.42);
+    font-size: 0.60rem;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    animation: hint-bounce 2.4s ease-in-out infinite;
   }
 
   @keyframes hint-bounce {
-    0%, 100% { transform: translateY(0);    opacity: 0.50; }
-    50%       { transform: translateY(6px); opacity: 0.75; }
+    0%,100% { transform: translateY(0);    opacity: 0.42; }
+    50%      { transform: translateY(6px); opacity: 0.65; }
   }
 
-  /* ══════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════
      RESPONSIVE
-  ══════════════════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════════════ */
 
-  /* Mobile ≤ 600px */
+  /*
+    LÓGICA MOBILE:
+    La imagen es 512×276 (ratio 1.855:1, landscape).
+    En un iPhone 14 (390×844, ratio 0.46:1, portrait):
+    
+    Con background-size: cover el navegador escala la imagen
+    para que su dimensión MÁS PEQUEÑA llene el viewport.
+    
+    El viewport mide 390px de ancho.
+    → La imagen se escala a 390px de ancho.
+    → Su altura resulta: 390 / 1.855 = 210px.
+    → 210px < 844px (alto del viewport).
+    
+    Entonces cover escala por ALTO: 844px de alto.
+    → Su ancho resulta: 844 * 1.855 = 1565px.
+    → Se recortan (1565-390)/2 = 587px de cada lado.
+    
+    El logo está centrado en la imagen → sigue centrado.
+    background-position: center 42% lo mantiene algo arriba.
+    background-color: #d0ab8e llena cualquier gap residual.
+    
+    En este viewport NO hay franjas porque cover siempre llena.
+    La única situación donde habría gap es si el viewport fuera
+    más ancho que 512px Y más alto que 276px simultáneamente
+    (imposible en móvil real).
+  */
+
   @media (max-width: 600px) {
-    .hero-logo-img {
-      /* En mobile la imagen es más ancha que el viewport sin clamp.
-         92vw = 362px en 393px viewport → logo cabe entero. */
-      width: clamp(260px, 92vw, 400px);
-      /* Sube un poco para que haya más espacio para los botones */
-      transform: translate(-50%, -54%);
+    .hero {
+      /* En mobile usamos position ligeramente más alta
+         para que el logo quede más centrado visualmente
+         dado que hay texto arriba y botones abajo */
+      background-position: center 38%;
     }
 
     .hero-content {
-      padding-top: calc(88px + env(safe-area-inset-top, 0px));
-      padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+      padding-top: calc(96px + env(safe-area-inset-top, 0px));
+      padding-bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px));
     }
 
     .hero-actions {
@@ -366,48 +340,35 @@
       justify-content: center;
     }
 
-    /* Textos más visibles en mobile */
-    .hero-location {
-      font-size: 0.82rem;
-      letter-spacing: 0.22em;
+    .hero-tagline-pill {
+      white-space: normal;
+      text-align: center;
+      font-size: 0.60rem;
+      letter-spacing: 0.14em;
+      padding: 0.4rem 0.9rem;
     }
 
-    .hero-tagline {
-      font-size: 0.82rem;
-      letter-spacing: 0.14em;
-    }
+    .hero-logo-spacer { min-height: 16px; }
   }
 
-  /* Mobile landscape */
+  /* Landscape mobile */
   @media (max-width: 900px) and (orientation: landscape) {
     .hero-content {
-      padding-top: calc(65px + env(safe-area-inset-top, 0px));
+      padding-top: calc(64px + env(safe-area-inset-top, 0px));
     }
-    .hero-logo-img {
-      width: clamp(180px, 55vw, 360px);
-      transform: translate(-50%, -50%);
-    }
+    .hero-logo-spacer { min-height: 6px; }
     .scroll-hint { display: none; }
   }
 
-  /* Tablet 601–900px */
+  /* Tablet */
   @media (min-width: 601px) and (max-width: 900px) {
-    .hero-logo-img {
-      width: clamp(360px, 75vw, 520px);
-    }
     .hero-content {
-      padding-top: calc(100px + env(safe-area-inset-top, 0px));
+      padding-top: calc(105px + env(safe-area-inset-top, 0px));
     }
   }
 
-  /* Desktop > 1400px */
+  /* Desktop grande */
   @media (min-width: 1400px) {
-    .hero-logo-img {
-      width: min(640px, 44vw);
-      transform: translate(-50%, -54%);
-    }
-    .hero-content {
-      padding-top: 120px;
-    }
+    .hero-content { padding-top: 128px; }
   }
 </style>
