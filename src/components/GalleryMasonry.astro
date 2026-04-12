@@ -1,0 +1,421 @@
+---
+// Gallery images array - all products
+const images = [
+  {
+    src: "/images/torta-infantil-1.webp",
+    alt: "Torta infantil temática Minecraft para cumpleaños",
+    title: "Torta Temática Minecraft",
+    category: "Infantiles",
+    description: "Torta personalizada con decoración de Minecraft y figuras de azúcar"
+  },
+  {
+    src: "/images/torta-infantil-2.webp",
+    alt: "Torta Spiderman con cupcakes rojos y azules",
+    title: "Torta Spiderman",
+    category: "Infantiles",
+    description: "Torta de Spiderman con esferas decorativas y cupcakes a juego"
+  },
+  {
+    src: "/images/tortamargarita.webp",
+    alt: "Torta blanca con margaritas - torta de celebración",
+    title: "Torta Margaritas Blancas",
+    category: "Celebración",
+    description: "Elegante torta con margaritas de crema, perfecta para cualquier celebración"
+  },
+  {
+    src: "/images/margaritasrosa.webp",
+    alt: "Torta rosada con margaritas rosas y blancas",
+    title: "Torta Margaritas Rosa",
+    category: "Celebración",
+    description: "Torta en tono rosado con flores artesanales en rosa y blanco"
+  },
+  {
+    src: "/images/torta-celebracion.webp",
+    alt: "Torta de cumpleaños rosada Hello 34",
+    title: "Torta Hello 34",
+    category: "Celebración",
+    description: "Torta especial para celebrar años, con decoración romántica en rosa"
+  },
+  {
+    src: "/images/cereza.webp",
+    alt: "Torta rectangular con crema, cerezas y chocolate",
+    title: "Torta de Cerezas",
+    category: "Clásicas",
+    description: "Torta rectangular con crema chantilly, cerezas frescas y virutas de chocolate"
+  },
+  {
+    src: "/images/lemonpie.webp",
+    alt: "Lemon pie con merengue tostado",
+    title: "Lemon Pie",
+    category: "Tartas",
+    description: "Tarta de limón con merengue italiano tostado con soplete"
+  },
+  {
+    src: "/images/postresitos.webp",
+    alt: "Postresitos individuales variados en copas",
+    title: "Postresitos Individuales",
+    category: "Postres",
+    description: "Postres individuales en copas: lemon pie, tiramisú, frutas y más"
+  },
+  {
+    src: "/images/tartasfrutales.webp",
+    alt: "Tartas frutales con frutillas, kiwi y durazno",
+    title: "Tartas Frutales",
+    category: "Tartas",
+    description: "Tartas con frutas frescas de estación: frutillas, kiwi, durazno y moras"
+  },
+];
+
+const categories = ["Todos", "Infantiles", "Celebración", "Clásicas", "Tartas", "Postres"];
+---
+
+<section id="galeria" class="gallery section-padding">
+  <div class="gallery-inner">
+    <!-- Header -->
+    <div class="section-header reveal">
+      <div class="section-tag">Mis creaciones</div>
+      <h2>Una galería hecha<br/><em>con dedicación</em></h2>
+      <p class="section-subtitle">
+        Cada torta es única. Estas son algunas de mis creaciones recientes.
+      </p>
+    </div>
+
+    <!-- Category filter -->
+    <div class="filter-bar reveal reveal-delay-1" role="group" aria-label="Filtrar por categoría">
+      {categories.map((cat) => (
+        <button
+          class={`filter-btn ${cat === 'Todos' ? 'active' : ''}`}
+          data-filter={cat}
+          aria-pressed={cat === 'Todos' ? 'true' : 'false'}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <!-- Masonry Grid -->
+    <div class="masonry-grid" id="masonry-grid">
+      {images.map((img, i) => (
+        <div
+          class={`masonry-item reveal reveal-delay-${(i % 4) + 1}`}
+          data-category={img.category}
+        >
+          <div class="card">
+            <div class="card-img-wrap">
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                class="card-img"
+                width="400"
+                height="400"
+              />
+              <div class="card-overlay">
+                <span class="card-category">{img.category}</span>
+                <h3 class="card-title">{img.title}</h3>
+                <p class="card-desc">{img.description}</p>
+                <a
+                  href={`https://wa.me/5492474453333?text=Hola%20Viviana!%20Vi%20la%20%22${encodeURIComponent(img.title)}%22%20en%20tu%20web%20y%20me%20gustar%C3%ADa%20pedir%20un%20presupuesto%20%F0%9F%8E%82`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="card-btn"
+                  aria-label={`Consultar presupuesto para ${img.title}`}
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  Consultar por esta torta
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="gallery-cta reveal">
+      <p>¿Tenés en mente algo especial?</p>
+      <a
+        href="https://wa.me/5492474453333?text=Hola%20Viviana!%20Tengo%20una%20idea%20para%20una%20torta%20especial%20y%20quisiera%20consultarte"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-wa"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir un diseño personalizado
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.masonry-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      // Update active state
+      filterBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+
+      // Filter items
+      items.forEach(item => {
+        const cat = item.getAttribute('data-category');
+        const show = filter === 'Todos' || cat === filter;
+        item.style.display = show ? '' : 'none';
+        if (show) {
+          item.style.animation = 'fadeIn 0.4s ease forwards';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .gallery {
+    background: linear-gradient(180deg, #FDFBF7 0%, #F9F3EF 100%);
+  }
+
+  .section-padding { padding: 6rem 1.5rem; }
+
+  .gallery-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rosa-viejo);
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-tag::before, .section-tag::after {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--rosa-viejo);
+    opacity: 0.4;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.2;
+    color: var(--grafito);
+    margin-bottom: 0.75rem;
+  }
+
+  h2 em { font-style: italic; color: var(--rosa-oscuro); }
+
+  .section-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: #888;
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+
+  .filter-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    border: 1.5px solid rgba(212,165,165,0.4);
+    background: transparent;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--rosa-viejo);
+    border-color: var(--rosa-viejo);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  /* Masonry */
+  .masonry-grid {
+    columns: 3;
+    column-gap: 1.25rem;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1.25rem;
+  }
+
+  .card {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+
+  .card-img-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .card:hover .card-img {
+    transform: scale(1.04);
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(51,33,28,0.88) 0%, rgba(51,33,28,0.2) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.25rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .card:hover .card-overlay { opacity: 1; }
+
+  .card-category {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dorado-claro);
+    margin-bottom: 0.3rem;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+
+  .card-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #25D366;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    align-self: flex-start;
+    white-space: nowrap;
+  }
+
+  .card-btn:hover {
+    background: #20b557;
+    transform: scale(1.03);
+  }
+
+  /* Bottom CTA */
+  .gallery-cta {
+    text-align: center;
+    margin-top: 3.5rem;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid rgba(212,165,165,0.2);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+
+  .gallery-cta p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--grafito);
+    margin-bottom: 1.25rem;
+  }
+
+  .btn-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25D366;
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+  }
+
+  .btn-wa:hover {
+    background: #20b557;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(37,211,102,0.45);
+  }
+
+  @media (max-width: 900px) {
+    .masonry-grid { columns: 2; }
+  }
+
+  @media (max-width: 540px) {
+    .masonry-grid { columns: 1; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
