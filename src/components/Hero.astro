@@ -1,26 +1,35 @@
 ---
-// Hero.astro v4 — Full-Bleed background-image (sin <img> tag)
+// Hero.astro v5 — Círculo cremita sobre fondo neutro en mobile
 //
-// CAMBIO CLAVE: usamos background-image CSS en lugar de <img>.
-// Esto garantiza que la imagen sea verdaderamente full-bleed sin
-// bordes, gaps ni comportamiento de elemento inline.
+// ESTRATEGIA:
+// Desktop: background-image cover — se ve toda la foto, logo centrado ✓
+// Mobile:  la imagen se "encaja" en el centro de la pantalla con
+//          object-fit: contain pero la imagen es un <img> posicionado
+//          absolutamente, no un background. El fondo es crema neutro.
+//          El logo circular queda como "flotando" sobre el fondo.
 //
-// Paleta extraída de logo-bg.webp:
-//   Alrededor del logo: #d0ab8e  (foto que rodea el círculo)
-//   Más claro x1.1:     #e4bc9c  (para zonas de luz)
-//   Esquinas TL:        #c4c499  TR: #dcd6c1  BL: #dfd9ca  BR: #a09995
-//   Interior logo:      ~#fdfbf7 (crema)
-//   Borde punteado:     #777478
+// Colores medidos de logo-bg.webp:
+//   Interior círculo: #edebed (casi blanco)
+//   Borde punteado:   #d1ced0
+//   Foto alrededor:   #d0ab8e
 ---
 
 <section id="inicio" class="hero" aria-label="Viviana Herrera Pastelería">
 
-  <!-- Overlay semántico separado para control fino -->
-  <div class="hero-overlay" aria-hidden="true"></div>
+  <!-- Fondo: imagen + overlay (desktop usa CSS bg, mobile usa <img> real) -->
+  <div class="hero-bg" aria-hidden="true">
+    <img
+      src="/images/logo-bg.webp"
+      alt=""
+      class="hero-img"
+      loading="eager"
+      fetchpriority="high"
+      width="512"
+      height="276"
+    />
+    <div class="hero-overlay"></div>
+  </div>
 
-  <!-- CONTENIDO
-       Orden: [NAVBAR fijo] → padding-top → [TEXTOS SEO] → [spacer=logo] → [BOTONES]
-  -->
   <div class="hero-content">
 
     <div class="hero-top reveal">
@@ -37,7 +46,6 @@
       </h1>
     </div>
 
-    <!-- Spacer: zona donde vive el logo de la imagen -->
     <div class="hero-logo-spacer" aria-hidden="true"></div>
 
     <div class="hero-bottom reveal reveal-delay-2">
@@ -70,16 +78,8 @@
 
 <style>
   /* ═══════════════════════════════════════════════════════════
-     HERO v4 — Full-Bleed via background-image CSS
-     
-     Por qué background-image y no <img>:
-     Un <img> es un elemento de reemplazo — tiene dimensiones
-     intrínsecas, márgenes implícitos y comportamiento inline
-     que hace difícil lograr un fondo verdaderamente full-bleed
-     sin CSS adicional. Con background-image el navegador
-     gestiona el llenado de la caja directamente.
+     BASE — compartido desktop y mobile
   ═══════════════════════════════════════════════════════════ */
-
   .hero {
     position: relative;
     min-height: 100svh;
@@ -88,48 +88,39 @@
     align-items: center;
     text-align: center;
     overflow: hidden;
-
-    /* ── FONDO EXTENDIDO ─────────────────────────────────────
-       1. background-color: color exacto que rodea al logo en
-          la foto (#d0ab8e). Es el "relleno" cuando la imagen
-          no cubre todo el viewport. Sin franjas negras.
-       2. background-image: la foto, full-bleed.
-       3. background-size: cover — siempre llena, nunca deja gaps.
-       4. background-position: center 42% — el logo circular queda
-          levemente por encima del centro, nunca se corta por arriba.
-    ──────────────────────────────────────────────────────── */
-    background-color: #d0ab8e;
-    background-image: url('/images/logo-bg.webp');
-    background-size: cover;
-    background-position: center 42%;
-    background-repeat: no-repeat;
+    /* Fondo crema — visible en mobile como "relleno" alrededor del círculo */
+    background-color: #F5F0EA;
   }
 
-  /* ── OVERLAY VERTICAL ─────────────────────────────────────
-     Oscurece arriba (textos SEO legibles) y abajo (botones),
-     zona central casi limpia (logo respira).
-  ──────────────────────────────────────────────────────── */
-  .hero-overlay {
+  .hero-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
+  }
+
+  /* ── DESKTOP: cover clásico, llena toda la pantalla ── */
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(18, 9, 4, 0.65)  0%,
-      rgba(18, 9, 4, 0.22) 20%,
-      rgba(18, 9, 4, 0.02) 36%,
-      rgba(18, 9, 4, 0.02) 62%,
-      rgba(18, 9, 4, 0.26) 78%,
-      rgba(18, 9, 4, 0.70) 100%
+      rgba(18, 9, 4, 0.62)  0%,
+      rgba(18, 9, 4, 0.18) 22%,
+      rgba(18, 9, 4, 0.02) 38%,
+      rgba(18, 9, 4, 0.02) 60%,
+      rgba(18, 9, 4, 0.24) 78%,
+      rgba(18, 9, 4, 0.68) 100%
     );
   }
 
-  /* ── CONTENIDO ────────────────────────────────────────────
-     flex column + space-between:
-       hero-top    → arriba (textos SEO)
-       hero-logo-spacer → flex:1 (zona del logo)
-       hero-bottom → abajo (botones)
-  ──────────────────────────────────────────────────────── */
+  /* ── CONTENIDO ── */
   .hero-content {
     position: relative;
     z-index: 1;
@@ -142,12 +133,10 @@
     flex-direction: column;
     min-height: 100svh;
     justify-content: space-between;
-    /* navbar (~75px) + aire visual (45px) + notch */
     padding-top: calc(120px + env(safe-area-inset-top, 0px));
     padding-bottom: calc(2.25rem + env(safe-area-inset-bottom, 0px));
   }
 
-  /* ── TEXTOS SEO ───────────────────────────────────────── */
   .hero-top {
     display: flex;
     flex-direction: column;
@@ -168,12 +157,7 @@
     text-shadow: 0 1px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5);
   }
 
-  .hero-tagline {
-    /* Reset h1 defaults */
-    margin: 0;
-    padding: 0;
-    font-size: 0; /* el texto vive en el span inner */
-  }
+  .hero-tagline { margin: 0; padding: 0; font-size: 0; }
 
   .hero-tagline-pill {
     display: inline-block;
@@ -183,25 +167,21 @@
     letter-spacing: 0.20em;
     text-transform: uppercase;
     color: rgba(253,251,247,0.95);
-    /* Caja oscura translúcida con blur — siempre legible */
     background: rgba(18, 9, 4, 0.52);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(253,251,247,0.15);
     border-radius: 50px;
     padding: 0.45rem 1.1rem;
-    /* Sin text-shadow: el fondo ya da el contraste necesario */
     line-height: 1;
     white-space: nowrap;
   }
 
-  /* ── SPACER DEL LOGO ──────────────────────────────────── */
   .hero-logo-spacer {
     flex: 1;
     min-height: 32px;
   }
 
-  /* ── BOTONES ──────────────────────────────────────────── */
   .hero-bottom {
     display: flex;
     flex-direction: column;
@@ -267,7 +247,6 @@
     transform: translateY(-2px);
   }
 
-  /* ── SCROLL HINT ─────────────────────────────────────── */
   .scroll-hint {
     display: flex;
     flex-direction: column;
@@ -285,47 +264,110 @@
     50%      { transform: translateY(6px); opacity: 0.65; }
   }
 
-  /* ═══════════════════════════════════════════════════════
-     RESPONSIVE
-  ═══════════════════════════════════════════════════════ */
-
-  /*
-    LÓGICA MOBILE:
-    La imagen es 512×276 (ratio 1.855:1, landscape).
-    En un iPhone 14 (390×844, ratio 0.46:1, portrait):
-    
-    Con background-size: cover el navegador escala la imagen
-    para que su dimensión MÁS PEQUEÑA llene el viewport.
-    
-    El viewport mide 390px de ancho.
-    → La imagen se escala a 390px de ancho.
-    → Su altura resulta: 390 / 1.855 = 210px.
-    → 210px < 844px (alto del viewport).
-    
-    Entonces cover escala por ALTO: 844px de alto.
-    → Su ancho resulta: 844 * 1.855 = 1565px.
-    → Se recortan (1565-390)/2 = 587px de cada lado.
-    
-    El logo está centrado en la imagen → sigue centrado.
-    background-position: center 42% lo mantiene algo arriba.
-    background-color: #d0ab8e llena cualquier gap residual.
-    
-    En este viewport NO hay franjas porque cover siempre llena.
-    La única situación donde habría gap es si el viewport fuera
-    más ancho que 512px Y más alto que 276px simultáneamente
-    (imposible en móvil real).
-  */
-
+  /* ═══════════════════════════════════════════════════════════
+     MOBILE ≤ 600px — Círculo cremita sobre fondo neutro
+     
+     En lugar de cover (que agranda la imagen hasta que el logo
+     ocupa toda la pantalla), usamos contain centrado.
+     
+     La imagen mide 512×276 (ratio 1.855:1).
+     El logo circular ocupa ~76% del alto de la imagen.
+     
+     Queremos que el logo ocupe ~70% del ancho del viewport.
+     → Ancho imagen = viewport width (contain lo ajusta por ancho)
+     → Alto imagen = viewport_width / 1.855
+     → Ej: 390px wide → imagen = 390×210px
+     
+     La imagen queda "flotando" en el centro vertical del hero.
+     El fondo #F5F0EA (crema cálido) llena arriba y abajo.
+     Los textos van sobre ese fondo crema con color oscuro.
+     Los botones también sobre el fondo crema.
+     
+     Es exactamente el look "círculo cremita" que pediste.
+  ═══════════════════════════════════════════════════════════ */
   @media (max-width: 600px) {
+
     .hero {
-      /* En mobile usamos position ligeramente más alta
-         para que el logo quede más centrado visualmente
-         dado que hay texto arriba y botones abajo */
-      background-position: center 38%;
+      /* Fondo crema que combina con el interior blanco del logo */
+      background-color: #F5F0EA;
+      /* Gradiente sutil — un poco más oscuro arriba y abajo */
+      background-image:
+        linear-gradient(
+          180deg,
+          #E8E0D5 0%,
+          #F5F0EA 20%,
+          #F5F0EA 80%,
+          #E8E0D5 100%
+        );
+    }
+
+    /* La imagen se posiciona como elemento centrado en el hero,
+       no como fondo que lo cubre todo */
+    .hero-img {
+      object-fit: contain;
+      /* Ancho completo → la imagen se escala para entrar por ancho */
+      width: 100%;
+      height: auto;
+      /* Posición absoluta centrada verticalmente */
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      /* Sin overlay que tape: el logo ya tiene buen contraste */
+      opacity: 1;
+    }
+
+    /* Overlay muy sutil solo en los extremos verticales
+       para que los textos y botones sean legibles sobre el crema */
+    .hero-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(232, 224, 213, 0.85)  0%,    /* arriba: funde con el crema */
+        rgba(232, 224, 213, 0.30) 18%,
+        rgba(232, 224, 213, 0.00) 30%,    /* centro: limpio */
+        rgba(232, 224, 213, 0.00) 70%,
+        rgba(232, 224, 213, 0.30) 82%,
+        rgba(232, 224, 213, 0.85) 100%    /* abajo: funde con el crema */
+      );
+    }
+
+    /* Textos en oscuro — legibles sobre fondo crema */
+    .hero-location {
+      color: #5a3e2b;
+      text-shadow: none;
+    }
+
+    /* La pill también se adapta — oscura sobre crema */
+    .hero-tagline-pill {
+      background: rgba(60, 35, 18, 0.75);
+      border-color: rgba(60, 35, 18, 0.15);
+      color: #FDFBF7;
+      white-space: normal;
+      text-align: center;
+      font-size: 0.60rem;
+      letter-spacing: 0.14em;
+      padding: 0.4rem 0.9rem;
+    }
+
+    /* Botones adaptados al fondo claro */
+    .btn-secondary {
+      background: rgba(60, 35, 18, 0.08);
+      color: #3c2312;
+      border-color: rgba(60, 35, 18, 0.35);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(60, 35, 18, 0.15);
+      border-color: rgba(60, 35, 18, 0.6);
+    }
+
+    /* Scroll hint oscuro */
+    .scroll-hint {
+      color: rgba(60, 35, 18, 0.45);
     }
 
     .hero-content {
-      padding-top: calc(96px + env(safe-area-inset-top, 0px));
+      padding-top: calc(88px + env(safe-area-inset-top, 0px));
       padding-bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px));
     }
 
@@ -340,18 +382,10 @@
       justify-content: center;
     }
 
-    .hero-tagline-pill {
-      white-space: normal;
-      text-align: center;
-      font-size: 0.60rem;
-      letter-spacing: 0.14em;
-      padding: 0.4rem 0.9rem;
-    }
-
     .hero-logo-spacer { min-height: 16px; }
   }
 
-  /* Landscape mobile */
+  /* ── Mobile landscape ── */
   @media (max-width: 900px) and (orientation: landscape) {
     .hero-content {
       padding-top: calc(64px + env(safe-area-inset-top, 0px));
@@ -360,14 +394,14 @@
     .scroll-hint { display: none; }
   }
 
-  /* Tablet */
+  /* ── Tablet 601–900px ── */
   @media (min-width: 601px) and (max-width: 900px) {
     .hero-content {
       padding-top: calc(105px + env(safe-area-inset-top, 0px));
     }
   }
 
-  /* Desktop grande */
+  /* ── Desktop grande > 1400px ── */
   @media (min-width: 1400px) {
     .hero-content { padding-top: 128px; }
   }
