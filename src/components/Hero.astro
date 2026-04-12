@@ -1,39 +1,56 @@
 ---
-// Hero.astro v3 — Fondo Extendido
-// Colores extraídos de logo-bg.webp:  top #d0c19f  |  sides #bca08e  |  bottom #c2ac9b
+// Hero.astro — v4 "Logo como elemento centrado"
+//
+// Diagnóstico: logo-bg.webp (512×276) es la imagen del círculo logo.
+// Con object-fit:cover en mobile portrait (393×852), la imagen escala
+// por el eje Y y el círculo queda MÁS ANCHO que el viewport → cortado.
+//
+// Solución: la imagen NO es el fondo — es un elemento <img> posicionado
+// en el centro de la sección. El fondo real es el gradiente extendido
+// (colores extraídos de los bordes de la foto). Esto garantiza:
+//   ✓ El círculo siempre se ve completo
+//   ✓ Sin franjas negras
+//   ✓ Texto SEO arriba, botones abajo
+//   ✓ Responsive en cualquier viewport
 ---
 
 <section id="inicio" class="hero" aria-label="Viviana Herrera Pastelería">
 
-  <div class="hero-bg" aria-hidden="true">
-    <img
-      src="/images/logo-bg.webp"
-      alt=""
-      class="hero-img"
-      loading="eager"
-      fetchpriority="high"
-      width="512"
-      height="276"
-    />
-    <div class="hero-overlay"></div>
-  </div>
+  <!-- Fondo decorativo: gradiente que imita la foto de tortas -->
+  <div class="hero-bg-deco" aria-hidden="true"></div>
 
+  <!-- El logo circular como elemento centrado, no como fondo -->
+  <img
+    src="/images/logo-bg.webp"
+    alt="Logo Viviana Herrera Pastelería"
+    class="hero-logo-img"
+    loading="eager"
+    fetchpriority="high"
+    width="512"
+    height="276"
+    aria-hidden="true"
+  />
+
+  <!-- Contenido semántico -->
   <div class="hero-content">
 
+    <!-- Textos SEO — encima del logo -->
     <div class="hero-top reveal">
       <p class="hero-location">
-        <svg width="10" height="13" viewBox="0 0 10 13" fill="none" aria-hidden="true">
+        <svg width="9" height="12" viewBox="0 0 10 13" fill="none" aria-hidden="true">
           <path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 8 5 8s5-4.25 5-8c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor"/>
         </svg>
         Salto, Buenos Aires
       </p>
       <h1 class="hero-tagline">
-        Tortas artesanales&thinsp;&middot;&thinsp;Postres&thinsp;&middot;&thinsp;Mesas&nbsp;dulces
+        Tortas artesanales · Postres · Mesas dulces
       </h1>
     </div>
 
-    <div class="hero-logo-spacer" aria-hidden="true"></div>
+    <!-- Espaciador adaptable: ocupa la zona visual del logo -->
+    <div class="hero-spacer" aria-hidden="true"></div>
 
+    <!-- Botones — debajo del logo -->
     <div class="hero-bottom reveal reveal-delay-2">
       <div class="hero-actions">
         <a
@@ -41,7 +58,6 @@
           target="_blank"
           rel="noopener noreferrer"
           class="btn-primary"
-          aria-label="Hacer un pedido por WhatsApp"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -50,25 +66,28 @@
         </a>
         <a href="#galeria" class="btn-secondary">Ver creaciones</a>
       </div>
-      <div class="scroll-hint" aria-hidden="true">
-        <span>Deslizá para conocer más</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+      <p class="scroll-hint" aria-hidden="true">
+        Deslizá para conocer más
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M12 5v14M5 12l7 7 7-7"/>
         </svg>
-      </div>
+      </p>
     </div>
 
   </div>
 </section>
 
 <style>
-  /* ═══════════════════════════════════════════════════════
-     FONDO EXTENDIDO
-     Gradiente radial que imita los colores de borde de
-     logo-bg.webp. Cuando la imagen no llega a los bordes
-     (cualquier viewport), este fondo la "prolonga" de forma
-     imperceptible. Adiós franjas negras.
-  ═══════════════════════════════════════════════════════ */
+  /* ══════════════════════════════════════════════════════════
+     HERO — v4 "Logo como elemento"
+     
+     El fondo real es un gradiente de tortas (cálido/oscuro).
+     La imagen logo-bg.webp se trata como un <img> posicionado
+     en el centro de la sección, nunca como background-image.
+     Esto resuelve definitivamente el problema de recorte.
+  ══════════════════════════════════════════════════════════ */
+
   .hero {
     position: relative;
     min-height: 100svh;
@@ -77,75 +96,111 @@
     align-items: center;
     text-align: center;
     overflow: hidden;
+
+    /* Fondo: gradiente que evoca la foto de tortas y postres.
+       Coincide con los bordes reales de logo-bg.webp. */
     background:
       radial-gradient(
-        ellipse 130% 90% at 50% 48%,
-        #cec0ae 0%,
-        #baa38e 45%,
-        #927460 80%,
-        #6e4e3c 100%
+        ellipse 160% 100% at 50% 0%,
+        #e8c99a 0%,
+        #c9a06e 20%,
+        #8a5c3e 50%,
+        #4a2e1c 80%,
+        #2c1a0e 100%
       );
   }
 
-  /* ── IMAGEN ── */
-  .hero-bg {
+  /* ── FONDO DECORATIVO (capa de textura) ── */
+  .hero-bg-deco {
     position: absolute;
     inset: 0;
     z-index: 0;
+    /* Viñeta que oscurece los bordes para profundidad */
+    background: radial-gradient(
+      ellipse 80% 70% at 50% 50%,
+      transparent 40%,
+      rgba(20, 10, 4, 0.45) 100%
+    );
+    pointer-events: none;
   }
 
-  .hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* 42% Y: logo circular queda en el tercio superior-central */
-    object-position: center 42%;
-    /* Fade suave en los bordes → se funde con el fondo extendido */
-    mask-image: radial-gradient(
-      ellipse 95% 90% at 50% 50%,
-      black 55%,
-      rgba(0,0,0,0.6) 75%,
-      transparent 100%
-    );
-    -webkit-mask-image: radial-gradient(
-      ellipse 95% 90% at 50% 50%,
-      black 55%,
-      rgba(0,0,0,0.6) 75%,
-      transparent 100%
-    );
+  /* ── LOGO-IMG: el círculo como elemento posicionado ──────
+     
+     Lógica de posicionamiento:
+     - position: absolute, centrado horizontalmente
+     - top: 50% con transform para centrar verticalmente
+     - width: clamp() que en mobile no supera el viewport
+     - z-index: 1 (entre el fondo y el contenido)
+     
+     En cualquier viewport, el círculo siempre cabe entero.
+  ──────────────────────────────────────────────────────── */
+  .hero-logo-img {
+    position: absolute;
+    /* Centro vertical: ajustado arriba del centro geométrico
+       para que los botones queden debajo con buen aire */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%);
+    z-index: 1;
+
+    /* Ancho máximo: 92% del viewport, nunca más de 560px.
+       En mobile 393px → imagen = 362px → cabe perfecta sin corte. */
+    width: clamp(280px, 92vw, 560px);
+    height: auto;
+
+    /* Sombra suave para separar del fondo */
+    filter:
+      drop-shadow(0 8px 40px rgba(0, 0, 0, 0.55))
+      drop-shadow(0 2px 12px rgba(0, 0, 0, 0.35));
+
+    /* Animación de entrada */
+    animation: logo-enter 1s ease forwards;
+    opacity: 0;
   }
 
-  /* ── OVERLAY — gradiente vertical para legibilidad ── */
-  .hero-overlay {
+  @keyframes logo-enter {
+    from { opacity: 0; transform: translate(-50%, -48%) scale(0.97); }
+    to   { opacity: 1; transform: translate(-50%, -52%) scale(1); }
+  }
+
+  /* ── OVERLAY sobre el logo para que el texto sea legible ── */
+  /* No necesitamos overlay global — el fondo oscuro ya ayuda.
+     Solo suavizamos arriba y abajo donde va el texto. */
+  .hero::before {
+    content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(20, 11, 6, 0.62)  0%,
-      rgba(20, 11, 6, 0.22) 22%,
-      rgba(20, 11, 6, 0.04) 38%,
-      rgba(20, 11, 6, 0.04) 60%,
-      rgba(20, 11, 6, 0.28) 76%,
-      rgba(20, 11, 6, 0.68) 100%
-    );
+    z-index: 2;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(20, 10, 4, 0.70) 0%,     /* zona navbar + textos SEO */
+        rgba(20, 10, 4, 0.15) 20%,
+        rgba(20, 10, 4, 0.00) 38%,    /* zona del logo — limpio */
+        rgba(20, 10, 4, 0.00) 60%,
+        rgba(20, 10, 4, 0.20) 76%,
+        rgba(20, 10, 4, 0.72) 100%    /* zona botones */
+      );
+    pointer-events: none;
   }
 
-  /* ── CONTENIDO ── */
+  /* ── CONTENIDO ─────────────────────────────────────────── */
   .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 3; /* encima del logo y del overlay */
     width: 100%;
-    max-width: 640px;
+    max-width: 600px;
     margin: 0 auto;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+
     display: flex;
     flex-direction: column;
     min-height: 100svh;
     justify-content: space-between;
-    /* 110px = navbar (~75px) + aire visual generoso (35px)
-       env() = margen de notch en iPhones                   */
-    padding-top: calc(110px + env(safe-area-inset-top, 0px));
+
+    /* padding-top: deja espacio claro bajo el navbar (≈75px) + aire (30px) */
+    padding-top: calc(105px + env(safe-area-inset-top, 0px));
     padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
   }
 
@@ -154,47 +209,52 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.7rem;
   }
 
   .hero-location {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.25em;
+    font-size: clamp(0.78rem, 2.2vw, 0.9rem);
+    font-weight: 700;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: #EAD9B5;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.85), 0 0 16px rgba(0,0,0,0.5);
+    color: #F0D99A;
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.95),
+      0 0  20px rgba(0, 0, 0, 0.7);
+    margin: 0;
   }
 
   .hero-tagline {
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(0.66rem, 1.9vw, 0.86rem);
-    font-weight: 400;
-    letter-spacing: 0.22em;
+    font-size: clamp(0.78rem, 2.4vw, 1rem);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(253, 251, 247, 0.90);
-    text-shadow: 0 1px 10px rgba(0,0,0,0.95), 0 0 24px rgba(0,0,0,0.6);
+    color: rgba(253, 251, 247, 0.97);
+    text-shadow:
+      0 2px 10px rgba(0, 0, 0, 0.98),
+      0 0  28px rgba(0, 0, 0, 0.8);
     line-height: 1.65;
     margin: 0;
     padding: 0;
   }
 
-  /* ── ESPACIADOR (zona visual del logo) ── */
-  .hero-logo-spacer {
+  /* ── ESPACIADOR ── */
+  .hero-spacer {
     flex: 1;
-    min-height: 28px;
+    min-height: 24px;
   }
 
-  /* ── ZONA BOTONES ── */
+  /* ── BOTONES ── */
   .hero-bottom {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.4rem;
+    gap: 1.25rem;
   }
 
   .hero-actions {
@@ -211,35 +271,35 @@
     gap: 0.5rem;
     background: #25D366;
     color: #fff;
-    padding: 0.85rem 1.75rem;
+    padding: 0.9rem 1.8rem;
     border-radius: 50px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-decoration: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    box-shadow: 0 4px 22px rgba(37,211,102,0.50);
+    box-shadow: 0 4px 22px rgba(37, 211, 102, 0.50);
     white-space: nowrap;
   }
 
   .btn-primary:hover {
     background: #20b557;
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(37,211,102,0.60);
+    box-shadow: 0 8px 32px rgba(37, 211, 102, 0.60);
   }
 
   .btn-secondary {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(253,251,247,0.10);
+    background: rgba(253, 251, 247, 0.12);
     color: #FDFBF7;
-    padding: 0.85rem 1.75rem;
+    padding: 0.9rem 1.8rem;
     border-radius: 50px;
-    border: 1.5px solid rgba(253,251,247,0.55);
+    border: 1.5px solid rgba(253, 251, 247, 0.60);
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     font-weight: 400;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -250,81 +310,104 @@
   }
 
   .btn-secondary:hover {
-    background: rgba(253,251,247,0.20);
-    border-color: rgba(253,251,247,0.9);
+    background: rgba(253, 251, 247, 0.22);
+    border-color: rgba(253, 251, 247, 0.95);
     transform: translateY(-2px);
   }
 
   /* ── SCROLL HINT ── */
   .scroll-hint {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    color: rgba(253,251,247,0.42);
-    font-size: 0.62rem;
-    letter-spacing: 0.20em;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
+    color: rgba(253, 251, 247, 0.50);
+    margin: 0;
     animation: hint-bounce 2.4s ease-in-out infinite;
+    flex-direction: column;
   }
 
   @keyframes hint-bounce {
-    0%,100% { transform: translateY(0);    opacity: 0.42; }
-    50%      { transform: translateY(7px); opacity: 0.68; }
+    0%, 100% { transform: translateY(0);    opacity: 0.50; }
+    50%       { transform: translateY(6px); opacity: 0.75; }
   }
 
-  /* ═══════════════════════════════════════════════
+  /* ══════════════════════════════════════════════════════════
      RESPONSIVE
-  ═══════════════════════════════════════════════ */
+  ══════════════════════════════════════════════════════════ */
 
-  /* Mobile portrait ≤ 600px */
+  /* Mobile ≤ 600px */
   @media (max-width: 600px) {
+    .hero-logo-img {
+      /* En mobile la imagen es más ancha que el viewport sin clamp.
+         92vw = 362px en 393px viewport → logo cabe entero. */
+      width: clamp(260px, 92vw, 400px);
+      /* Sube un poco para que haya más espacio para los botones */
+      transform: translate(-50%, -54%);
+    }
+
     .hero-content {
-      padding-top: calc(92px + env(safe-area-inset-top, 0px));
-      padding-bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px));
+      padding-top: calc(88px + env(safe-area-inset-top, 0px));
+      padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
     }
-    /* Sin mask en mobile: la imagen cubre bien con cover
-       y el fondo extendido maneja los gaps */
-    .hero-img {
-      object-position: center 40%;
-      mask-image: none;
-      -webkit-mask-image: none;
-    }
+
     .hero-actions {
       flex-direction: column;
       align-items: stretch;
     }
+
     .btn-primary,
     .btn-secondary {
       width: 100%;
       justify-content: center;
     }
-    .hero-tagline {
-      font-size: 0.64rem;
-      letter-spacing: 0.17em;
+
+    /* Textos más visibles en mobile */
+    .hero-location {
+      font-size: 0.82rem;
+      letter-spacing: 0.22em;
     }
-    .hero-logo-spacer { min-height: 16px; }
+
+    .hero-tagline {
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+    }
   }
 
   /* Mobile landscape */
   @media (max-width: 900px) and (orientation: landscape) {
     .hero-content {
-      padding-top: calc(68px + env(safe-area-inset-top, 0px));
+      padding-top: calc(65px + env(safe-area-inset-top, 0px));
     }
-    .hero-logo-spacer { min-height: 8px; }
+    .hero-logo-img {
+      width: clamp(180px, 55vw, 360px);
+      transform: translate(-50%, -50%);
+    }
     .scroll-hint { display: none; }
   }
 
   /* Tablet 601–900px */
   @media (min-width: 601px) and (max-width: 900px) {
+    .hero-logo-img {
+      width: clamp(360px, 75vw, 520px);
+    }
     .hero-content {
       padding-top: calc(100px + env(safe-area-inset-top, 0px));
     }
   }
 
-  /* Desktop grande > 1400px */
+  /* Desktop > 1400px */
   @media (min-width: 1400px) {
-    .hero-content { padding-top: 124px; }
-    .hero-tagline { font-size: 0.9rem; }
+    .hero-logo-img {
+      width: min(640px, 44vw);
+      transform: translate(-50%, -54%);
+    }
+    .hero-content {
+      padding-top: 120px;
+    }
   }
 </style>
