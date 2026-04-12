@@ -1,130 +1,361 @@
 ---
-// src/components/Hero.astro
+// Hero.astro — Refactored v2
+// Estrategia: la imagen logo-bg.webp es el centro visual.
+// Desktop: object-fit cover (imagen llena la pantalla, logo centrado).
+// Mobile:  object-fit contain con fondo sólido, garantiza que el
+//          círculo del logo NO se corta nunca.
+// Contenido semántico: ubicación + h1 arriba del logo, botones debajo.
 ---
 
-<section id="inicio" class="hero">
-  <div class="hero-bg">
+<section id="inicio" class="hero" aria-label="Viviana Herrera Pastelería - Inicio">
+
+  <!-- ── FONDO ── -->
+  <div class="hero-bg" aria-hidden="true">
     <img
-      src="/images/logo-bg.webp" 
-      alt="Pastelería Viviana Herrera"
+      src="/images/logo-bg.webp"
+      alt=""
       class="hero-img"
       loading="eager"
       fetchpriority="high"
+      width="512"
+      height="276"
     />
+    <!-- Overlay sólo en desktop donde usamos cover -->
     <div class="hero-overlay"></div>
   </div>
 
+  <!-- ── CONTENIDO ── -->
+  <!--
+    Estructura vertical:
+    [ubicación]   ← SEO / contexto geográfico
+    [h1 tagline]  ← SEO primario — especialidades
+    [logo img]    ← zona reservada para el círculo de la imagen (invisible, solo spacing)
+    [botones CTA] ← conversión
+    [scroll hint]
+  -->
   <div class="hero-content">
-    <div class="hero-header">
-       <p class="hero-location reveal">📍 Salto, Buenos Aires</p>
-       <h1 class="hero-titles reveal">
-         TORTAS ARTESANALES • POSTRES • MESAS DULCES
-       </h1>
+
+    <!-- Zona superior: texto ENCIMA del logo visual -->
+    <div class="hero-top reveal">
+      <p class="hero-location">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden="true">
+          <path d="M6 0C3.243 0 1 2.243 1 5c0 3.5 5 9 5 9s5-5.5 5-9c0-2.757-2.243-5-5-5zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="currentColor"/>
+        </svg>
+        Salto, Buenos Aires
+      </p>
+      <h1 class="hero-tagline">
+        Tortas artesanales&nbsp;·&nbsp;Postres&nbsp;·&nbsp;Mesas&nbsp;dulces
+      </h1>
     </div>
 
-    <div class="hero-spacer"></div>
+    <!-- Espaciador invisible que "respeta" la zona del logo en la imagen.
+         En desktop el logo de la imagen queda al centro natural.
+         En mobile este bloque empuja los botones hacia abajo del círculo. -->
+    <div class="hero-logo-spacer" aria-hidden="true"></div>
 
-    <div class="hero-footer">
-      <div class="hero-actions reveal">
-        <a href="https://wa.me/5492474453333" target="_blank" class="btn-primary">
+    <!-- Zona inferior: botones DEBAJO del logo visual -->
+    <div class="hero-bottom reveal reveal-delay-2">
+      <div class="hero-actions">
+        <a
+          href="https://wa.me/5491100000000?text=Hola%20Viviana!%20Vi%20tu%20web%20y%20me%20gustar%C3%ADa%20consultar%20sobre%20un%20pedido"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary"
+          aria-label="Hacer un pedido por WhatsApp a Viviana Herrera"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
           Hacer un pedido
         </a>
-        <a href="#galeria" class="btn-secondary">Ver creaciones</a>
+        <a href="#galeria" class="btn-secondary">
+          Ver creaciones
+        </a>
       </div>
 
-      <div class="scroll-hint reveal">
+      <div class="scroll-hint" aria-hidden="true">
         <span>Deslizá para conocer más</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 5v14M5 12l7 7 7-7"/>
         </svg>
       </div>
     </div>
+
   </div>
 </section>
 
 <style>
-  .hero { 
-    position: relative; 
-    height: 100vh; 
-    display: flex; 
-    overflow: hidden; 
-  }
-
-  .hero-bg { position: absolute; inset: 0; z-index: 0; }
-  .hero-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65); }
-  
-  .hero-overlay { 
-    position: absolute; 
-    inset: 0; 
-    background: radial-gradient(circle, rgba(51,33,28,0.1) 0%, rgba(51,33,28,0.5) 100%); 
-  }
-
-  .hero-content { 
-    position: relative; 
-    z-index: 1; 
-    width: 100%;
-    height: 100vh;
-    display: flex; 
-    flex-direction: column; 
-    justify-content: space-between; 
-    /* 140px de padding superior para que no choque con los textos del Navbar */
-    padding: 140px 20px 40px; 
-    text-align: center;
-  }
-
-  .hero-header {
+  /* ─────────────────────────────────────────
+     HERO SECTION
+  ───────────────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    /* Fondo sólido oscuro — visible en mobile cuando la imagen no cubre */
+    background-color: #1a110d;
   }
 
-  .hero-location { 
-    font-family: 'Montserrat', sans-serif; 
-    font-size: 0.9rem; 
-    color: #E8D5B0; 
+  /* ─── IMAGEN DE FONDO ─── */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    /* Desktop: cover — la imagen llena toda la pantalla */
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    /* Overlay suave para legibilidad del texto sobre la imagen */
+    background: linear-gradient(
+      180deg,
+      rgba(26,17,13,0.52) 0%,      /* top — zona del texto superior */
+      rgba(26,17,13,0.08) 35%,     /* centro — zona del logo, casi limpio */
+      rgba(26,17,13,0.08) 65%,
+      rgba(26,17,13,0.55) 100%     /* bottom — zona de los botones */
+    );
+  }
+
+  /* ─── CONTENIDO ─── */
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    /* Layout: top / spacer / bottom en columna, pantalla completa */
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    justify-content: space-between;
+    /* Padding top = altura del navbar (~80px) + aire */
+    padding-top: 100px;
+    padding-bottom: 2.5rem;
+  }
+
+  /* ─── ZONA SUPERIOR ─── */
+  .hero-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .hero-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    color: #E8D5B0;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
   }
 
-  .hero-titles {
+  .hero-tagline {
+    /* h1 — SEO primario */
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(1rem, 4vw, 1.4rem);
-    color: #FDFBF7;
+    font-size: clamp(0.72rem, 2.2vw, 0.9rem);
     font-weight: 400;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    text-shadow: 0 2px 15px rgba(0,0,0,0.8);
+    color: rgba(253,251,247,0.88);
+    text-shadow: 0 1px 10px rgba(0,0,0,0.7);
+    line-height: 1.5;
+    /* Reset h1 defaults */
+    margin: 0;
   }
 
-  /* El resorte que mantiene el centro libre */
-  .hero-spacer {
-    flex-grow: 1; 
-    min-height: 150px;
+  /* ─── ESPACIADOR DEL LOGO ─────────────────
+     Este bloque es invisible pero reserva el
+     espacio donde visualmente está el círculo
+     del logo en la imagen de fondo.
+     flex: 1 lo hace crecer para ocupar el
+     espacio disponible entre top y bottom.
+  ─────────────────────────────────────────── */
+  .hero-logo-spacer {
+    flex: 1;
+    min-height: 40px;
   }
 
-  .hero-actions { 
-    display: flex; 
-    gap: 1.5rem; 
-    justify-content: center; 
+  /* ─── ZONA INFERIOR ─── */
+  .hero-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.85rem;
     flex-wrap: wrap;
-    margin-bottom: 3.5rem; 
+    justify-content: center;
+    width: 100%;
   }
 
-  .btn-primary { 
-    background: #25D366; color: white; padding: 1rem 2.2rem; 
-    border-radius: 50px; font-weight: 600; text-decoration: none;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  /* ─── BOTONES ─── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25D366;
+    color: white;
+    padding: 0.85rem 1.8rem;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+    white-space: nowrap;
   }
 
-  .btn-secondary { 
-    background: rgba(253,251,247,0.1); color: #FDFBF7; padding: 1rem 2.2rem; 
-    border-radius: 50px; border: 1.5px solid #FDFBF7; text-decoration: none;
-    backdrop-filter: blur(4px);
+  .btn-primary:hover {
+    background: #20b557;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(37,211,102,0.55);
   }
 
-  .scroll-hint { 
-    color: rgba(253,251,247,0.6); font-size: 0.75rem;
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(253,251,247,0.08);
+    color: #FDFBF7;
+    padding: 0.85rem 1.8rem;
+    border-radius: 50px;
+    border: 1.5px solid rgba(253,251,247,0.55);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(6px);
+    white-space: nowrap;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(253,251,247,0.18);
+    border-color: rgba(253,251,247,0.9);
+    transform: translateY(-2px);
+  }
+
+  /* ─── SCROLL HINT ─── */
+  .scroll-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(253,251,247,0.45);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    animation: bounce 2.2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.45; }
+    50%       { transform: translateY(7px); opacity: 0.7; }
+  }
+
+  /* ─────────────────────────────────────────
+     MOBILE — La corrección clave
+     La imagen 512×276 es landscape. En un
+     viewport portrait (ej. 390×844) con
+     object-fit: cover, la imagen se escala
+     al ANCHO (390px) y su altura resultante
+     es 390*(276/512) ≈ 210px — menos que la
+     pantalla, así que cover la escala por
+     ALTO y recorta los laterales... pero el
+     logo queda centrado.
+
+     El problema real es que el logo está
+     visualmente en el centro de la imagen,
+     y si el navbar opaco tapa la parte
+     superior, el logo "pierde la cabeza".
+
+     Solución: en mobile usamos contain +
+     fondo oscuro sólido. La imagen se ve
+     completa sin recortes.
+  ─────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .hero {
+      /* El fondo oscuro llena lo que contain no cubre */
+      background-color: #1a110d;
+    }
+
+    .hero-img {
+      /* contain: la imagen NUNCA se recorta */
+      object-fit: contain;
+      /* Centrada verticalmente en el 35-65% de la pantalla
+         (reservamos el top para el texto y el bottom para botones) */
+      object-position: center 50%;
+      /* Limitamos la altura de la imagen para que no ocupe toda la pantalla
+         y deje espacio para el contenido */
+      height: 60%;
+      top: 20%;         /* empuja la imagen hacia el centro vertical */
+      position: absolute;
+    }
+
+    .hero-overlay {
+      /* En mobile el overlay cubre los bordes negros del contain */
+      background: linear-gradient(
+        180deg,
+        rgba(26,17,13,0.90) 0%,
+        rgba(26,17,13,0.60) 18%,
+        rgba(26,17,13,0.00) 30%,
+        rgba(26,17,13,0.00) 70%,
+        rgba(26,17,13,0.65) 85%,
+        rgba(26,17,13,0.92) 100%
+      );
+    }
+
+    .hero-content {
+      padding-top: 80px;
+      padding-bottom: 2rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-tagline {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+    }
+  }
+
+  /* ─── TABLET ─── */
+  @media (min-width: 601px) and (max-width: 900px) {
+    .hero-content {
+      padding-top: 90px;
+    }
   }
 </style>

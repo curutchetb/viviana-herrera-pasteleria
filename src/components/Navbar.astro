@@ -16,7 +16,7 @@ import Logo from './Logo.astro';
     </ul>
 
     <a
-      href="https://wa.me/5492474453333?text=Hola%20Viviana!%20Quer%C3%ADa%20consultar%20sobre%20un%20pedido"
+      href="https://wa.me/5491100000000?text=Hola%20Viviana!%20Quer%C3%ADa%20consultar%20sobre%20un%20pedido"
       target="_blank"
       rel="noopener noreferrer"
       class="nav-cta"
@@ -42,7 +42,7 @@ import Logo from './Logo.astro';
       <li><a href="#faqs" class="mobile-link">Preguntas frecuentes</a></li>
       <li>
         <a
-          href="https://wa.me/5492474453333"
+          href="https://wa.me/5491100000000"
           target="_blank"
           rel="noopener noreferrer"
           class="mobile-link mobile-wa"
@@ -95,13 +95,16 @@ import Logo from './Logo.astro';
     left: 0;
     right: 0;
     z-index: 100;
-    transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
-    padding: 0.5rem 0;
+    /* Completamente transparente — no tapa el logo de la imagen */
+    background: transparent;
+    transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+    padding: 0.75rem 0;
   }
 
   .navbar.scrolled {
     background: rgba(253,251,247,0.96);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 20px rgba(51,33,28,0.08);
     padding: 0.25rem 0;
   }
@@ -140,10 +143,17 @@ import Logo from './Logo.astro';
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--grafito);
+    /* Blanco sobre el hero oscuro; el .scrolled los vuelve grafito */
+    color: rgba(253,251,247,0.85);
     text-decoration: none;
     position: relative;
     transition: color 0.2s ease;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  }
+
+  .navbar.scrolled .nav-links a {
+    color: var(--grafito);
+    text-shadow: none;
   }
 
   .nav-links a::after {
@@ -197,9 +207,14 @@ import Logo from './Logo.astro';
     display: block;
     width: 22px;
     height: 2px;
-    background: var(--grafito);
-    transition: all 0.3s ease;
+    /* Blanco sobre el hero oscuro */
+    background: rgba(253,251,247,0.9);
+    transition: all 0.3s;
     transform-origin: center;
+  }
+
+  .navbar.scrolled .hamburger span {
+    background: var(--grafito);
   }
 
   .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
