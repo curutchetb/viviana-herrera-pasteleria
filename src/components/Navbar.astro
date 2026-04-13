@@ -4,19 +4,22 @@ import Logo from './Logo.astro';
 
 <nav id="navbar" class="navbar">
   <div class="nav-inner">
-    <a href="#inicio" class="nav-logo" aria-label="Inicio">
-      <Logo size="sm" variant="dark" />
+    <!-- Logo (solo visible al scrollear) -->
+    <a href="#inicio" class="nav-logo" aria-label="Volver al inicio">
+	      <Logo size="sm" variant="dark" />
     </a>
 
+    <!-- Desktop links -->
     <ul class="nav-links" role="list">
-      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#pedidos">Pedir torta</a></li>
       <li><a href="#galeria">Galería</a></li>
-      <li><a href="#pedidos">Configurar pedido</a></li>
+      <li><a href="#nosotros">Sobre mí</a></li>
       <li><a href="#faqs">Preguntas</a></li>
     </ul>
 
+    <!-- Desktop WA CTA -->
     <a
-      href="https://wa.me/5491100000000?text=Hola%20Viviana!%20Quer%C3%ADa%20consultar%20sobre%20un%20pedido"
+      href="https://wa.me/5492474453333?text=Hola%20Viviana!%20Quer%C3%ADa%20consultar%20sobre%20un%20pedido"
       target="_blank"
       rel="noopener noreferrer"
       class="nav-cta"
@@ -27,27 +30,53 @@ import Logo from './Logo.astro';
       WhatsApp
     </a>
 
-    <!-- Mobile hamburger -->
+    <!-- Mobile: botón hamburger (solo ≤768px) -->
     <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 
-  <!-- Mobile menu -->
+  <!-- MOBILE MENU — drawer con botones grandes y claros -->
   <div class="mobile-menu" id="mobile-menu" hidden>
     <ul role="list">
-      <li><a href="#nosotros" class="mobile-link">Nosotros</a></li>
-      <li><a href="#galeria" class="mobile-link">Galería</a></li>
-      <li><a href="#pedidos" class="mobile-link">Configurar pedido</a></li>
-      <li><a href="#faqs" class="mobile-link">Preguntas frecuentes</a></li>
+      <li>
+        <a href="#pedidos" class="mobile-link mobile-link--highlight">
+          <span class="mobile-link-icon">🎂</span>
+          <span>Pedir una torta</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+      </li>
+      <li>
+        <a href="#galeria" class="mobile-link">
+          <span class="mobile-link-icon">📸</span>
+          <span>Ver galería</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+      </li>
+      <li>
+        <a href="#nosotros" class="mobile-link">
+          <span class="mobile-link-icon">👩‍🍳</span>
+          <span>Sobre mí</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+      </li>
+      <li>
+        <a href="#faqs" class="mobile-link">
+          <span class="mobile-link-icon">❓</span>
+          <span>Preguntas frecuentes</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+      </li>
       <li>
         <a
-          href="https://wa.me/5491100000000"
+          href="https://wa.me/5492474453333?text=Hola%20Viviana!%20Quisiera%20hacer%20un%20pedido"
           target="_blank"
           rel="noopener noreferrer"
           class="mobile-link mobile-wa"
         >
-          💬 Escribirme por WhatsApp
+          <span class="mobile-link-icon">💬</span>
+          <span>Escribirme por WhatsApp</span>
+          <span class="mobile-link-arrow">→</span>
         </a>
       </li>
     </ul>
