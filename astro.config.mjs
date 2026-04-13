@@ -3,5 +3,5 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   integrations: [tailwind()],
-  site: 'https://vivianaherreratortasypostres.vercel.app',
+  site: 'https://viviana-herrera-pasteleria.vercel.app',
 });

@@ -1,19 +1,26 @@
 ---
-import Logo from './Logo.astro';
+// Logo en navbar: usa logo-completo.webp (subir a /public/images/)
 ---
 
 <nav id="navbar" class="navbar">
   <div class="nav-inner">
     <!-- Logo (solo visible al scrollear) -->
     <a href="#inicio" class="nav-logo" aria-label="Volver al inicio">
-      <Logo size="sm" variant="dark" />
+      <img
+        src="/images/logo-completo.webp"
+        alt="Viviana Herrera Pastelería"
+        class="nav-logo-img"
+        width="72"
+        height="72"
+        loading="eager"
+      />
     </a>
 
     <!-- Desktop links -->
     <ul class="nav-links" role="list">
       <li><a href="#pedidos">Pedir torta</a></li>
       <li><a href="#galeria">Galería</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#nosotros">Sobre mí</a></li>
       <li><a href="#faqs">Preguntas</a></li>
     </ul>
 
@@ -56,7 +63,7 @@ import Logo from './Logo.astro';
       <li>
         <a href="#nosotros" class="mobile-link">
           <span class="mobile-link-icon">👩‍🍳</span>
-          <span>Sobre Viviana</span>
+          <span>Sobre mí</span>
           <span class="mobile-link-arrow">→</span>
         </a>
       </li>
@@ -155,6 +162,13 @@ import Logo from './Logo.astro';
   .navbar.scrolled .nav-logo {
     opacity: 1;
     pointer-events: auto;
+  }
+
+  .nav-logo-img {
+    height: 52px;
+    width: auto;
+    display: block;
+    object-fit: contain;
   }
 
   /* ── DESKTOP LINKS ── */

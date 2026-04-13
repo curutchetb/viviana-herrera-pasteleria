@@ -11,10 +11,10 @@ const {
   description = "Tortas artesanales, postres y mesas dulces para todos tus eventos. Hecha con amor en Salto, Buenos Aires. Pedidos por WhatsApp.",
   // og-image.webp: 1200×630, diseñada para WhatsApp / redes sociales
   image = "/images/og-image.webp",
-  url = "https://vivianaherreratortasypostres.vercel.app",
+  url = "https://viviana-herrera-pasteleria.vercel.app",
 } = Astro.props;
 
-const siteUrl = "https://vivianaherreratortasypostres.vercel.app";
+const siteUrl = "https://viviana-herrera-pasteleria.vercel.app";
 const absoluteImage = `${siteUrl}${image}`;
 ---
 
@@ -24,7 +24,9 @@ const absoluteImage = `${siteUrl}${image}`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#FDFBF7" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/webp" href="/images/logo-completo.webp" />
+    <!-- Fallback PNG para navegadores que no soportan WebP como favicon -->
+    <link rel="apple-touch-icon" href="/images/logo-completo.webp" />
 
     <!-- SEO Primario -->
     <title>{title}</title>
