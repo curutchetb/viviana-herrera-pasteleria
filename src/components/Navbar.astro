@@ -4,12 +4,10 @@ import Logo from './Logo.astro';
 
 <nav id="navbar" class="navbar">
   <div class="nav-inner">
-    <!-- Logo (solo visible al scrollear) -->
     <a href="#inicio" class="nav-logo" aria-label="Volver al inicio">
-	      <Logo size="sm" variant="dark" />
+      <Logo size="sm" variant="dark" />
     </a>
 
-    <!-- Desktop links -->
     <ul class="nav-links" role="list">
       <li><a href="#pedidos">Pedir torta</a></li>
       <li><a href="#galeria">Galería</a></li>
@@ -17,7 +15,6 @@ import Logo from './Logo.astro';
       <li><a href="#faqs">Preguntas</a></li>
     </ul>
 
-    <!-- Desktop WA CTA -->
     <a
       href="https://wa.me/5492474453333?text=Hola%20Viviana!%20Quer%C3%ADa%20consultar%20sobre%20un%20pedido"
       target="_blank"
@@ -29,105 +26,53 @@ import Logo from './Logo.astro';
       </svg>
       WhatsApp
     </a>
-
-    <!-- Mobile: botón hamburger (solo ≤768px) -->
-    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-
-  <!-- MOBILE MENU — drawer con botones grandes y claros -->
-  <div class="mobile-menu" id="mobile-menu" hidden>
-    <ul role="list">
-      <li>
-        <a href="#pedidos" class="mobile-link mobile-link--highlight">
-          <span class="mobile-link-icon">🎂</span>
-          <span>Pedir una torta</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-      </li>
-      <li>
-        <a href="#galeria" class="mobile-link">
-          <span class="mobile-link-icon">📸</span>
-          <span>Ver galería</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-      </li>
-      <li>
-        <a href="#nosotros" class="mobile-link">
-          <span class="mobile-link-icon">👩‍🍳</span>
-          <span>Sobre mí</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-      </li>
-      <li>
-        <a href="#faqs" class="mobile-link">
-          <span class="mobile-link-icon">❓</span>
-          <span>Preguntas frecuentes</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://wa.me/5492474453333?text=Hola%20Viviana!%20Quisiera%20hacer%20un%20pedido"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="mobile-link mobile-wa"
-        >
-          <span class="mobile-link-icon">💬</span>
-          <span>Escribirme por WhatsApp</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-      </li>
-    </ul>
   </div>
 </nav>
 
+<div class="bottom-nav">
+  <ul role="list">
+    <li>
+      <a href="#pedidos" class="bottom-link highlight">
+        <span class="bottom-icon">🎂</span>
+        <span class="bottom-text">Pedidos</span>
+      </a>
+    </li>
+    <li>
+      <a href="#galeria" class="bottom-link">
+        <span class="bottom-icon">📸</span>
+        <span class="bottom-text">Galería</span>
+      </a>
+    </li>
+    <li>
+      <a href="#faqs" class="bottom-link">
+        <span class="bottom-icon">❓</span>
+        <span class="bottom-text">Ayuda</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://wa.me/5492474453333" target="_blank" class="bottom-link wa">
+        <span class="bottom-icon">💬</span>
+        <span class="bottom-text">WhatsApp</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
 <script>
   const navbar = document.getElementById('navbar');
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  // Scroll effect
   window.addEventListener('scroll', () => {
     navbar?.classList.toggle('scrolled', window.scrollY > 80);
-  });
-
-  // Mobile menu toggle
-  hamburger?.addEventListener('click', () => {
-    const open = mobileMenu?.hasAttribute('hidden') === false;
-    if (open) {
-      mobileMenu?.setAttribute('hidden', '');
-      hamburger.setAttribute('aria-expanded', 'false');
-      hamburger.classList.remove('open');
-    } else {
-      mobileMenu?.removeAttribute('hidden');
-      hamburger.setAttribute('aria-expanded', 'true');
-      hamburger.classList.add('open');
-    }
-  });
-
-  // Close on link click
-  document.querySelectorAll('.mobile-link').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu?.setAttribute('hidden', '');
-      hamburger?.setAttribute('aria-expanded', 'false');
-      hamburger?.classList.remove('open');
-    });
   });
 </script>
 
 <style>
+  /* --- NAVBAR BASE (Desktop) --- */
   .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    /* 100% transparente sobre el Hero */
     background: transparent;
-    transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
-    /* safe-area-inset-top: respeta el notch en iPhones */
+    transition: all 0.35s ease;
     padding-top: calc(0.85rem + env(safe-area-inset-top, 0px));
     padding-bottom: 0.85rem;
   }
@@ -135,7 +80,6 @@ import Logo from './Logo.astro';
   .navbar.scrolled {
     background: rgba(253,251,247,0.96);
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 20px rgba(51,33,28,0.08);
     padding-top: calc(0.35rem + env(safe-area-inset-top, 0px));
     padding-bottom: 0.35rem;
@@ -144,64 +88,26 @@ import Logo from './Logo.astro';
   .nav-inner {
     max-width: 1200px;
     margin: 0 auto;
-    /* Aumentamos el padding lateral en mobile para aire visual */
     padding: 0 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
   }
 
-  .nav-logo {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
+  .nav-logo { opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .navbar.scrolled .nav-logo { opacity: 1; pointer-events: auto; }
 
-  .navbar.scrolled .nav-logo {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-    align-items: center;
-  }
-
+  .nav-links { display: flex; list-style: none; gap: 2rem; }
   .nav-links a {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.8rem;
     font-weight: 500;
-    letter-spacing: 0.1em;
     text-transform: uppercase;
-    /* Blanco sobre el hero oscuro; el .scrolled los vuelve grafito */
     color: rgba(253,251,247,0.85);
     text-decoration: none;
-    position: relative;
-    transition: color 0.2s ease;
     text-shadow: 0 1px 6px rgba(0,0,0,0.4);
   }
-
-  .navbar.scrolled .nav-links a {
-    color: var(--grafito);
-    text-shadow: none;
-  }
-
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--rosa-viejo);
-    transition: width 0.25s ease;
-  }
-
-  .nav-links a:hover { color: var(--rosa-oscuro); }
-  .nav-links a:hover::after { width: 100%; }
+  .navbar.scrolled .nav-links a { color: var(--grafito); text-shadow: none; }
 
   .nav-cta {
     display: inline-flex;
@@ -214,72 +120,63 @@ import Logo from './Logo.astro';
     font-family: 'Montserrat', sans-serif;
     font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 0.05em;
     text-decoration: none;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 12px rgba(37,211,102,0.3);
   }
 
-  .nav-cta:hover {
-    background: #20b557;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+  /* --- BOTTOM NAV (Mobile) --- */
+  .bottom-nav {
+    display: none; /* Oculto en PC */
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #ffffff;
+    z-index: 1000;
+    border-top: 1px solid rgba(212,165,165,0.3);
+    padding-top: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
   }
 
-  .hamburger {
-    display: none;
+  .bottom-nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+
+  .bottom-link {
+    display: flex;
     flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    /* Blanco sobre el hero oscuro */
-    background: rgba(253,251,247,0.9);
-    transition: all 0.3s;
-    transform-origin: center;
-  }
-
-  .navbar.scrolled .hamburger span {
-    background: var(--grafito);
-  }
-
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .mobile-menu {
-    background: rgba(253,251,247,0.98);
-    border-top: 1px solid rgba(212,165,165,0.2);
-    padding: 1rem 1.5rem 1.5rem;
-  }
-
-  .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
-
-  .mobile-link {
-    display: block;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--grafito);
+    align-items: center;
     text-decoration: none;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(212,165,165,0.15);
-    transition: color 0.2s ease, padding-left 0.2s ease;
-    letter-spacing: 0.08em;
+    color: var(--grafito);
+    gap: 5px;
+    min-width: 65px;
   }
 
-  .mobile-link:hover { color: var(--rosa-oscuro); padding-left: 0.5rem; }
-  .mobile-wa { color: #25D366 !important; font-weight: 600; border-bottom: none !important; }
+  .bottom-icon { font-size: 1.5rem; }
+  .bottom-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Item resaltado (Pedidos) */
+  .bottom-link.highlight .bottom-text { color: var(--rosa-oscuro); }
+  .bottom-link.highlight .bottom-icon { transform: scale(1.2); }
+
+  /* WhatsApp resaltado en verde */
+  .bottom-link.wa .bottom-text { color: #166534; }
 
   @media (max-width: 768px) {
-    .nav-links, .nav-cta { display: none; }
-    .hamburger { display: flex; }
+    .nav-links, .nav-cta, .nav-logo { display: none !important; }
+    .bottom-nav { display: block; }
+    .navbar { background: transparent !important; box-shadow: none !important; }
+
+    /* Evita que el contenido quede tapado por la barra inferior */
+    :global(body) { padding-bottom: 85px; }
   }
 </style>
