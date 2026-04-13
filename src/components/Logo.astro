@@ -1,140 +1,22 @@
 ---
-export interface Props {
-  size?: 'sm' | 'md' | 'lg' | 'xl';
-  variant?: 'light' | 'dark';
-}
+// src/components/Logo.astro
+const { size = "md", variant = "dark" } = Astro.props;
 
-const { size = 'md', variant = 'dark' } = Astro.props;
-
-const sizes = {
-  sm: { container: 80, font: 10, sub: 7 },
-  md: { container: 140, font: 14, sub: 9 },
-  lg: { container: 200, font: 20, sub: 12 },
-  xl: { container: 280, font: 26, sub: 14 },
+const sizeClasses = {
+  sm: "max-w-[120px]",
+  md: "max-w-[200px]",
+  lg: "max-w-[280px]",
+  xl: "max-w-[350px]"
 };
 
-const s = sizes[size];
-const textColor = variant === 'light' ? '#FDFBF7' : '#333333';
-const accentColor = variant === 'light' ? '#E8D5B0' : '#C9A96E';
+const variantClasses = variant === "light" ? "brightness-110 contrast-105" : "";
 ---
 
-<div class="logo-wrap" style={`width:${s.container}px;height:${s.container}px`}>
-  <svg
-    viewBox="0 0 200 200"
-    xmlns="http://www.w3.org/2000/svg"
-    width={s.container}
-    height={s.container}
-    role="img"
-    aria-label="Viviana Herrera Pastelería - Logo"
-  >
-    <!-- Outer decorative dashed ring -->
-    <circle
-      cx="100" cy="100" r="95"
-      fill="none"
-      stroke={accentColor}
-      stroke-width="1.2"
-      stroke-dasharray="3 5"
-      stroke-linecap="round"
-    />
-
-    <!-- Thin solid ring -->
-    <circle
-      cx="100" cy="100" r="88"
-      fill="none"
-      stroke={accentColor}
-      stroke-width="0.6"
-      opacity="0.5"
-    />
-
-    <!-- Inner background circle -->
-    <circle cx="100" cy="100" r="83" fill="none" />
-
-    <!-- Central botanical / flower icon -->
-    <g transform="translate(100, 72)" fill={accentColor}>
-      <!-- Petals -->
-      <ellipse cx="0" cy="-12" rx="3" ry="7" transform="rotate(0)" opacity="0.9"/>
-      <ellipse cx="0" cy="-12" rx="3" ry="7" transform="rotate(45)" opacity="0.9"/>
-      <ellipse cx="0" cy="-12" rx="3" ry="7" transform="rotate(90)" opacity="0.9"/>
-      <ellipse cx="0" cy="-12" rx="3" ry="7" transform="rotate(135)" opacity="0.9"/>
-      <ellipse cx="0" cy="-12" rx="3" ry="7" transform="rotate(180)" opacity="0.9"/>
-      <ellipse cx="0" cy="-12" rx="3" ry="7" transform="rotate(225)" opacity="0.9"/>
-      <ellipse cx="0" cy="-12" rx="3" ry="7" transform="rotate(270)" opacity="0.9"/>
-      <ellipse cx="0" cy="-12" rx="3" ry="7" transform="rotate(315)" opacity="0.9"/>
-      <!-- Center dot -->
-      <circle cx="0" cy="0" r="4" fill={accentColor} />
-      <circle cx="0" cy="0" r="2" fill={textColor} />
-    </g>
-
-    <!-- Thin decorative line above name -->
-    <line x1="52" y1="96" x2="148" y2="96" stroke={accentColor} stroke-width="0.6" opacity="0.7"/>
-
-    <!-- Main Name: VIVIANA HERRERA -->
-    <text
-      x="100" y="113"
-      text-anchor="middle"
-      font-family="'Playfair Display', Georgia, serif"
-      font-size="17"
-      font-weight="500"
-      letter-spacing="3"
-      fill={textColor}
-    >VIVIANA</text>
-
-    <text
-      x="100" y="128"
-      text-anchor="middle"
-      font-family="'Playfair Display', Georgia, serif"
-      font-size="17"
-      font-weight="500"
-      letter-spacing="3"
-      fill={textColor}
-    >HERRERA</text>
-
-    <!-- Thin decorative line below name -->
-    <line x1="62" y1="133" x2="138" y2="133" stroke={accentColor} stroke-width="0.6" opacity="0.7"/>
-
-    <!-- Subtitle: PRODUCTOS PARA TODOS LOS EVENTOS -->
-    <text
-      x="100" y="148"
-      text-anchor="middle"
-      font-family="Montserrat, system-ui, sans-serif"
-      font-size="6.5"
-      font-weight="400"
-      letter-spacing="1.5"
-      fill={accentColor}
-    >PRODUCTOS PARA TODOS LOS EVENTOS</text>
-
-    <!-- Sub-subtitle: PASTELERÍA -->
-    <text
-      x="100" y="161"
-      text-anchor="middle"
-      font-family="Montserrat, system-ui, sans-serif"
-      font-size="7"
-      font-weight="300"
-      letter-spacing="4"
-      fill={textColor}
-      opacity="0.7"
-    >PASTELERÍA</text>
-
-    <!-- Small decorative dots at sides -->
-    <circle cx="42" cy="130" r="1.5" fill={accentColor} opacity="0.6" />
-    <circle cx="158" cy="130" r="1.5" fill={accentColor} opacity="0.6" />
-    <circle cx="38" cy="126" r="1" fill={accentColor} opacity="0.4" />
-    <circle cx="162" cy="126" r="1" fill={accentColor} opacity="0.4" />
-  </svg>
+<div class={`flex items-center justify-center p-2 ${variantClasses}`}>
+  <img 
+    src="/images/logo-completo.webp" 
+    alt="Viviana Herrera Pastelería Artesanal" 
+    class={`${sizeClasses[size]} h-auto rounded-full shadow-2xl transition-transform duration-500 hover:scale-105`}
+    loading="eager"
+  />
 </div>
-
-<style>
-  .logo-wrap {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .logo-wrap svg {
-    transition: transform 0.4s ease;
-  }
-
-  .logo-wrap:hover svg {
-    transform: scale(1.03) rotate(2deg);
-  }
-</style>

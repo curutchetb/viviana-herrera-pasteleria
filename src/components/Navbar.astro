@@ -1,5 +1,5 @@
 ---
-// Logo en navbar: usa logo-completo.webp (subir a /public/images/)
+import Logo from './Logo.astro';
 ---
 
 <nav id="navbar" class="navbar">
@@ -88,10 +88,12 @@
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
+  // Scroll effect
   window.addEventListener('scroll', () => {
     navbar?.classList.toggle('scrolled', window.scrollY > 80);
   });
 
+  // Mobile menu toggle
   hamburger?.addEventListener('click', () => {
     const open = mobileMenu?.hasAttribute('hidden') === false;
     if (open) {
@@ -105,6 +107,7 @@
     }
   });
 
+  // Close on link click
   document.querySelectorAll('.mobile-link').forEach(link => {
     link.addEventListener('click', () => {
       mobileMenu?.setAttribute('hidden', '');
@@ -121,8 +124,10 @@
     left: 0;
     right: 0;
     z-index: 100;
+    /* 100% transparente sobre el Hero */
     background: transparent;
-    transition: background 0.35s ease, box-shadow 0.35s ease;
+    transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+    /* safe-area-inset-top: respeta el notch en iPhones */
     padding-top: calc(0.85rem + env(safe-area-inset-top, 0px));
     padding-bottom: 0.85rem;
   }
@@ -139,6 +144,7 @@
   .nav-inner {
     max-width: 1200px;
     margin: 0 auto;
+    /* Aumentamos el padding lateral en mobile para aire visual */
     padding: 0 1.5rem;
     display: flex;
     align-items: center;
@@ -148,7 +154,7 @@
 
   .nav-logo {
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
     pointer-events: none;
   }
 
@@ -157,14 +163,6 @@
     pointer-events: auto;
   }
 
-  .nav-logo-img {
-    height: 52px;
-    width: auto;
-    display: block;
-    object-fit: contain;
-  }
-
-  /* ── DESKTOP LINKS ── */
   .nav-links {
     display: flex;
     list-style: none;
@@ -178,10 +176,11 @@
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    /* Blanco sobre el hero oscuro; el .scrolled los vuelve grafito */
     color: rgba(253,251,247,0.85);
     text-decoration: none;
     position: relative;
-    transition: color 0.2s;
+    transition: color 0.2s ease;
     text-shadow: 0 1px 6px rgba(0,0,0,0.4);
   }
 
@@ -198,12 +197,11 @@
     width: 0;
     height: 1px;
     background: var(--rosa-viejo);
-    transition: width 0.25s;
+    transition: width 0.25s ease;
   }
 
   .nav-links a:hover { color: var(--rosa-oscuro); }
   .nav-links a:hover::after { width: 100%; }
-  .navbar.scrolled .nav-links a:hover { color: var(--rosa-oscuro); }
 
   .nav-cta {
     display: inline-flex;
@@ -218,36 +216,31 @@
     font-weight: 600;
     letter-spacing: 0.05em;
     text-decoration: none;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
     box-shadow: 0 2px 12px rgba(37,211,102,0.3);
   }
 
-  .nav-cta:hover { background: #20b557; transform: translateY(-1px); }
+  .nav-cta:hover {
+    background: #20b557;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+  }
 
-  /* ── HAMBURGER ── */
   .hamburger {
     display: none;
     flex-direction: column;
     gap: 5px;
-    background: rgba(0,0,0,0.25);
-    border: 1.5px solid rgba(255,255,255,0.3);
-    border-radius: 10px;
+    background: none;
+    border: none;
     cursor: pointer;
-    padding: 0.55rem 0.65rem;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: background 0.2s;
-  }
-
-  .navbar.scrolled .hamburger {
-    background: rgba(253,251,247,0.9);
-    border-color: rgba(51,33,28,0.15);
+    padding: 0.5rem;
   }
 
   .hamburger span {
     display: block;
     width: 22px;
     height: 2px;
+    /* Blanco sobre el hero oscuro */
     background: rgba(253,251,247,0.9);
     transition: all 0.3s;
     transform-origin: center;
@@ -261,90 +254,29 @@
   .hamburger.open span:nth-child(2) { opacity: 0; }
   .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  /* ── MOBILE MENU DRAWER ──
-     Diseñado para personas mayores:
-     - Botones grandes con altura mínima táctil (56px)
-     - Iconos + texto + flecha → completamente claro
-     - Primer ítem destacado en rosa (la acción principal)
-  ── */
   .mobile-menu {
     background: rgba(253,251,247,0.98);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(212,165,165,0.25);
-    padding: 0.5rem 1rem 1rem;
+    border-top: 1px solid rgba(212,165,165,0.2);
+    padding: 1rem 1.5rem 1.5rem;
   }
 
-  .mobile-menu ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
+  .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
 
   .mobile-link {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
+    display: block;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;         /* grande — legible para personas mayores */
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--grafito);
     text-decoration: none;
-    padding: 0.9rem 1rem;    /* área táctil generosa ≥ 44px */
-    border-radius: 12px;
-    transition: background 0.15s, color 0.15s;
-    min-height: 56px;        /* mínimo recomendado para táctil */
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(212,165,165,0.15);
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    letter-spacing: 0.08em;
   }
 
-  .mobile-link:hover,
-  .mobile-link:active {
-    background: var(--rosa-claro);
-    color: var(--rosa-oscuro);
-  }
-
-  /* Primer item — acción principal: pedir torta */
-  .mobile-link--highlight {
-    background: var(--rosa-claro);
-    color: var(--rosa-oscuro);
-    font-weight: 700;
-    border: 1.5px solid rgba(212,165,165,0.4);
-  }
-
-  .mobile-link--highlight:hover {
-    background: var(--rosa-viejo);
-    color: white;
-  }
-
-  .mobile-link-icon {
-    font-size: 1.3rem;
-    flex-shrink: 0;
-    width: 1.6rem;
-    text-align: center;
-  }
-
-  .mobile-link-arrow {
-    margin-left: auto;
-    font-size: 1rem;
-    color: var(--rosa-viejo);
-    opacity: 0.7;
-  }
-
-  /* WhatsApp link */
-  .mobile-wa {
-    background: #f0fdf4;
-    color: #166534 !important;
-    border: 1.5px solid rgba(37,211,102,0.25);
-    font-weight: 600;
-    margin-top: 0.25rem;
-  }
-
-  .mobile-wa:hover {
-    background: #dcfce7 !important;
-    color: #166534 !important;
-  }
-
-  .mobile-wa .mobile-link-arrow { color: #25D366; opacity: 1; }
+  .mobile-link:hover { color: var(--rosa-oscuro); padding-left: 0.5rem; }
+  .mobile-wa { color: #25D366 !important; font-weight: 600; border-bottom: none !important; }
 
   @media (max-width: 768px) {
     .nav-links, .nav-cta { display: none; }
