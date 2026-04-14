@@ -1,0 +1,372 @@
+---
+// HowItWorks.astro — "Cómo hacer un pedido"
+// 3 pasos simples, diseño moderno con línea conectora
+---
+
+<section id="como-funciona" class="hiw">
+  <div class="hiw-inner">
+
+    <div class="hiw-header reveal">
+      <div class="hiw-tag">Simple y rápido</div>
+      <h2>¿Cómo hago<br/><em>mi pedido?</em></h2>
+      <p class="hiw-sub">En tres pasos, tu torta lista para el evento</p>
+    </div>
+
+    <div class="hiw-steps">
+
+      <!-- Paso 1 -->
+      <div class="hiw-step reveal">
+        <div class="hiw-step-num">01</div>
+        <div class="hiw-step-icon">🎂</div>
+        <h3>Elegís tu torta</h3>
+        <p>Usá el configurador para elegir el tamaño y los rellenos que más te gusten. ¡Hay 12 opciones!</p>
+        <a href="#pedidos" class="hiw-step-cta">Configurar ahora →</a>
+      </div>
+
+      <!-- Conector -->
+      <div class="hiw-connector" aria-hidden="true">
+        <div class="hiw-connector-line"></div>
+        <div class="hiw-connector-arrow">›</div>
+      </div>
+
+      <!-- Paso 2 -->
+      <div class="hiw-step reveal reveal-delay-1">
+        <div class="hiw-step-num">02</div>
+        <div class="hiw-step-icon">💬</div>
+        <h3>Me escribís</h3>
+        <p>El pedido me llega directamente a WhatsApp. Te confirmo disponibilidad y precio al instante.</p>
+        <p class="hiw-step-note">⏱ Con 5 días de anticipación</p>
+      </div>
+
+      <!-- Conector -->
+      <div class="hiw-connector" aria-hidden="true">
+        <div class="hiw-connector-line"></div>
+        <div class="hiw-connector-arrow">›</div>
+      </div>
+
+      <!-- Paso 3 -->
+      <div class="hiw-step reveal reveal-delay-2">
+        <div class="hiw-step-num">03</div>
+        <div class="hiw-step-icon">🎉</div>
+        <h3>Retirás en Salto</h3>
+        <p>Pasás a buscar tu torta por el domicilio en Salto, Buenos Aires. Lista para sorprender.</p>
+        <p class="hiw-step-note">📍 Salto, Buenos Aires</p>
+      </div>
+
+    </div>
+
+    <!-- CTA final -->
+    <div class="hiw-cta reveal">
+      <a href="#pedidos" class="hiw-btn-main">
+        🎂 Quiero hacer mi pedido
+      </a>
+      <a
+        href="https://wa.me/5492474453333?text=Hola%20Viviana!%20Tengo%20una%20consulta%20antes%20de%20hacer%20mi%20pedido"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hiw-btn-secondary"
+      >
+        💬 Tengo una pregunta
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .hiw {
+    background: linear-gradient(180deg, #FDFBF7 0%, #F9F3EF 100%);
+    padding: 5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decoración de fondo sutil */
+  .hiw::before {
+    content: '🎂';
+    position: absolute;
+    font-size: 12rem;
+    opacity: 0.03;
+    top: -2rem;
+    right: -2rem;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .hiw-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .hiw-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .hiw-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rosa-viejo);
+    margin-bottom: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .hiw-tag::before, .hiw-tag::after {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--rosa-viejo);
+    opacity: 0.4;
+  }
+
+  .hiw-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    line-height: 1.2;
+    color: var(--grafito);
+    margin-bottom: 0.6rem;
+  }
+
+  .hiw-header h2 em {
+    font-style: italic;
+    color: var(--rosa-oscuro);
+  }
+
+  .hiw-sub {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    color: #999;
+  }
+
+  /* Steps layout */
+  .hiw-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: 3rem;
+  }
+
+  /* Conector entre pasos */
+  .hiw-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3.5rem;
+    flex-shrink: 0;
+    width: 48px;
+  }
+
+  .hiw-connector-line {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--rosa-viejo), var(--dorado-claro));
+    opacity: 0.4;
+    margin-bottom: 0.2rem;
+  }
+
+  .hiw-connector-arrow {
+    font-size: 1.4rem;
+    color: var(--rosa-viejo);
+    opacity: 0.5;
+    line-height: 1;
+    margin-top: -0.5rem;
+  }
+
+  /* Cada paso */
+  .hiw-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid rgba(212,165,165,0.15);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .hiw-step:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 36px rgba(212,165,165,0.2);
+  }
+
+  .hiw-step-num {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--rosa-viejo), var(--rosa-oscuro));
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.7rem;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+
+  .hiw-step-icon {
+    font-size: 2.8rem;
+    margin-bottom: 0.75rem;
+    margin-top: 0.5rem;
+    line-height: 1;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
+  }
+
+  .hiw-step h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--grafito);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+
+  .hiw-step p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.80rem;
+    color: #777;
+    line-height: 1.65;
+    margin-bottom: 0.5rem;
+  }
+
+  .hiw-step-note {
+    font-size: 0.72rem !important;
+    color: var(--rosa-viejo) !important;
+    font-weight: 600 !important;
+    background: var(--rosa-claro);
+    padding: 0.25rem 0.7rem;
+    border-radius: 50px;
+    display: inline-block;
+    margin-top: 0.25rem;
+  }
+
+  .hiw-step-cta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--rosa-oscuro);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    margin-top: 0.75rem;
+    transition: gap 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .hiw-step-cta:hover {
+    color: var(--grafito);
+    gap: 0.5rem;
+  }
+
+  /* CTA final */
+  .hiw-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hiw-btn-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--rosa-viejo), var(--rosa-oscuro));
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 20px rgba(184,133,126,0.4);
+  }
+
+  .hiw-btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(184,133,126,0.5);
+  }
+
+  .hiw-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    color: var(--grafito);
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1.5px solid rgba(212,165,165,0.35);
+    transition: all 0.2s ease;
+  }
+
+  .hiw-btn-secondary:hover {
+    border-color: var(--rosa-viejo);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(212,165,165,0.2);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .hiw {
+      padding: 4rem 1.25rem;
+    }
+
+    .hiw-steps {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .hiw-connector {
+      /* En mobile el conector es vertical */
+      flex-direction: row;
+      padding-top: 0;
+      padding-left: 3rem;
+      width: auto;
+      height: 28px;
+      align-items: center;
+      gap: 0;
+    }
+
+    .hiw-connector-line {
+      width: 2px;
+      height: 28px;
+      background: linear-gradient(180deg, var(--rosa-viejo), var(--dorado-claro));
+    }
+
+    .hiw-connector-arrow {
+      position: absolute;
+      transform: rotate(90deg);
+      margin: 0;
+      margin-top: 28px;
+    }
+
+    .hiw-step {
+      padding: 1.75rem 1.25rem 1.5rem;
+    }
+
+    .hiw-cta {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hiw-btn-main,
+    .hiw-btn-secondary {
+      justify-content: center;
+    }
+  }
+</style>

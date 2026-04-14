@@ -2,9 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import GalleryMasonry from '../components/GalleryMasonry.astro';
+import HowItWorks from '../components/HowItWorks.astro';
 import OrderConfigurator from '../components/OrderConfigurator.astro';
+import GalleryMasonry from '../components/GalleryMasonry.astro';
+import About from '../components/About.astro';
 import FAQs from '../components/FAQs.astro';
 import Footer from '../components/Footer.astro';
 ---
@@ -13,12 +14,21 @@ import Footer from '../components/Footer.astro';
   <Navbar />
   <main>
     <Hero />
+    <HowItWorks />
     <OrderConfigurator />
     <GalleryMasonry />
     <About />
     <FAQs />
   </main>
   <Footer />
+
+  <!-- Botón volver arriba — aparece al scrollear -->
+  <a href="#inicio" class="back-to-top" id="back-to-top" aria-label="Volver al inicio">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+    <span>Inicio</span>
+  </a>
 
   <!-- MOBILE TAB BAR — solo visible en ≤768px -->
   <nav class="tab-bar" aria-label="Menú principal">
@@ -47,32 +57,83 @@ import Footer from '../components/Footer.astro';
   </nav>
 </Layout>
 
+<script>
+  // Botón volver arriba: aparece después de scrollear 400px
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btn?.classList.toggle('visible', window.scrollY > 400);
+  });
+</script>
+
 <style>
   main {
     overflow: hidden;
-    /* Espacio para el tab bar en mobile */
-    padding-bottom: 0;
   }
 
   @media (max-width: 768px) {
-    main {
-      padding-bottom: 76px; /* altura del tab bar */
+    main { padding-bottom: 76px; }
+  }
+
+  /* ═══════════════════════════════════════
+     BOTÓN VOLVER ARRIBA
+     Aparece en desktop Y mobile después de
+     scrollear 400px. En mobile se ubica
+     encima del tab bar.
+  ═══════════════════════════════════════ */
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 1.5rem;
+    z-index: 140;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    background: white;
+    color: var(--rosa-oscuro);
+    padding: 0.65rem 0.85rem;
+    border-radius: 14px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(51,33,28,0.12);
+    border: 1.5px solid rgba(212,165,165,0.3);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    /* Oculto por defecto */
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.2s ease;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .back-to-top:hover {
+    background: var(--rosa-claro);
+    box-shadow: 0 6px 24px rgba(184,133,126,0.25);
+    transform: translateY(-2px);
+  }
+
+  /* En mobile: posicionado encima del tab bar */
+  @media (max-width: 768px) {
+    .back-to-top {
+      bottom: calc(76px + 0.75rem);
+      right: 1rem;
+      padding: 0.6rem 0.75rem;
     }
   }
 
-  /* ═══════════════════════════════════════════════
-     TAB BAR — Solo mobile ≤768px
-     
-     Diseño pensado para personas mayores:
-     - Siempre visible, sin interacción previa
-     - Ícono grande + texto debajo = claro y legible
-     - 3 ítems máximo (regla del pulgar)
-     - "Pedir torta" destacado en rosa: es la acción principal
-     - "WhatsApp" en verde: reconocible universalmente
-     - Área táctil mínima: 64px de alto
-  ═══════════════════════════════════════════════ */
+  /* ═══════════════════════════════════════
+     TAB BAR
+  ═══════════════════════════════════════ */
   .tab-bar {
-    display: none; /* oculto en desktop */
+    display: none;
   }
 
   @media (max-width: 768px) {
@@ -83,11 +144,11 @@ import Footer from '../components/Footer.astro';
       left: 0;
       right: 0;
       z-index: 150;
-      background: rgba(253, 251, 247, 0.97);
+      background: rgba(253,251,247,0.97);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(212, 165, 165, 0.2);
-      box-shadow: 0 -4px 24px rgba(51, 33, 28, 0.08);
+      border-top: 1px solid rgba(212,165,165,0.2);
+      box-shadow: 0 -4px 24px rgba(51,33,28,0.08);
       padding-bottom: env(safe-area-inset-bottom, 0px);
       height: calc(64px + env(safe-area-inset-bottom, 0px));
       align-items: stretch;
@@ -104,40 +165,15 @@ import Footer from '../components/Footer.astro';
       color: #9a8070;
       padding: 0.5rem 0.25rem;
       transition: background 0.15s ease, color 0.15s ease;
-      border-radius: 0;
       position: relative;
       min-height: 64px;
-      /* Área táctil generosa */
       -webkit-tap-highlight-color: rgba(212,165,165,0.2);
     }
 
     .tab-item:active {
-      background: rgba(212, 165, 165, 0.12);
+      background: rgba(212,165,165,0.12);
     }
 
-    /* Pedir torta — destacado con pill rosada */
-    .tab-item--primary {
-      color: #B8857E;
-    }
-
-    .tab-item--primary .tab-icon {
-      background: linear-gradient(135deg, #D4A5A5, #B8857E);
-      border-radius: 14px;
-      width: 44px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      box-shadow: 0 2px 8px rgba(184,133,126,0.35);
-    }
-
-    .tab-item--primary .tab-label {
-      color: #B8857E;
-      font-weight: 700;
-    }
-
-    /* WhatsApp — verde reconocible */
     .tab-item--wa {
       color: #25D366;
     }
@@ -159,8 +195,7 @@ import Footer from '../components/Footer.astro';
       font-weight: 700;
     }
 
-    /* Ícono neutro (fotos) */
-    .tab-item:not(.tab-item--primary):not(.tab-item--wa) .tab-icon {
+    .tab-item:not(.tab-item--wa) .tab-icon {
       font-size: 1.3rem;
       height: 32px;
       display: flex;
@@ -187,7 +222,6 @@ import Footer from '../components/Footer.astro';
       line-height: 1;
     }
 
-    /* Separadores verticales sutiles entre ítems */
     .tab-item:not(:last-child)::after {
       content: '';
       position: absolute;
