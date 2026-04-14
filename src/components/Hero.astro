@@ -62,7 +62,7 @@
           </svg>
           Hacer un pedido
         </a>
-        <a href="#pedidos" class="btn-secondary">🎂 Elegir rellenos</a>
+        <a href="#pedidos" class="btn-secondary btn-secondary--desktop">Ver galería</a>
       </div>
 
       <div class="scroll-hint" aria-hidden="true">
@@ -385,9 +385,13 @@
     .hero-logo-spacer { min-height: 16px; }
   }
 
+  /* Botón secundario: oculto en mobile (el Tab Bar lo cubre) */
+  @media (max-width: 768px) {
+    .btn-secondary--desktop { display: none; }
+  }
+
   /* ── Mobile landscape ── */
-  @media (max-width: 900px) and (orientation: landscape) {
-    .hero-content {
+  @media (max-width: 900px) and (orientation: landscape) {    .hero-content {
       padding-top: calc(64px + env(safe-area-inset-top, 0px));
     }
     .hero-logo-spacer { min-height: 6px; }
