@@ -60,17 +60,38 @@ const absoluteImage = `${siteUrl}${image}`;
         "@context": "https://schema.org",
         "@type": "Bakery",
         "name": "Viviana Herrera Pastelería",
-        "description": "Pastelería artesanal especializada en tortas para eventos, postres y mesas dulces",
+        "url": "https://viviana-herrera-pasteleria.vercel.app",
+        "description": "Pastelería artesanal especializada en tortas personalizadas para eventos, postres individuales y mesas dulces en Salto, Buenos Aires.",
+        "image": "https://viviana-herrera-pasteleria.vercel.app/images/og-image.webp",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Salto",
           "addressRegion": "Buenos Aires",
           "addressCountry": "AR"
         },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "-34.2933",
+          "longitude": "-60.2553"
+        },
         "telephone": "+5492474453333",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+5492474453333",
+          "contactType": "customer service",
+          "availableLanguage": "Spanish"
+        },
+        "openingHours": [
+          "Mo-Fr 09:00-19:00",
+          "Sa 09:00-14:00"
+        ],
         "priceRange": "$$",
-        "servesCuisine": "Pastelería artesanal",
-        "hasMap": "https://maps.google.com/?q=Salto,Buenos+Aires"
+        "servesCuisine": ["Pastelería artesanal", "Tortas personalizadas", "Postres"],
+        "hasMap": "https://maps.google.com/?q=Salto,Buenos+Aires",
+        "sameAs": [
+          "https://www.instagram.com/vivhes__/",
+          "https://www.facebook.com/profile.php?id=100079233349136"
+        ]
       }
     </script>
 
