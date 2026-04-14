@@ -210,7 +210,7 @@ const fillings = {
 
     if (ready) {
       const fillingText = selectedFillings.join(' y ');
-      const msg = `Hola Viviana! 🎂 Quisiera pedir un presupuesto para una torta de *${selectedSize}* con rellenos de *${fillingText}*. ¿Me podés indicar el costo y disponibilidad? ¡Muchas gracias!`;
+      const msg = `Hola Viviana! Quisiera pedir un presupuesto para una torta de *${selectedSize}* con rellenos de *${fillingText}*. ¿Me podés indicar el costo y disponibilidad? ¡Muchas gracias!`;
       waBtn.onclick = () => window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
     }
   }
